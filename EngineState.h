@@ -32,8 +32,9 @@ enum Language {
 
 class Engine {
     private:
-        EventQueue eventQueue;
+        
     public:
+        EventQueue eventQueue;
         enum GameState gamestate;
         enum PlayMode playmode;
         enum Language language;
