@@ -17,6 +17,7 @@
 #include "SmallFont.h"
 #include "Sound.h"
 #include "images/images.h"
+#include "eventhandlers/JoystickSlidePotHandler.h"
 extern "C" void __disable_irq(void);
 extern "C" void __enable_irq(void);
 extern "C" void TIMG12_IRQHandler(void);
@@ -39,12 +40,17 @@ uint32_t Random(uint32_t n){
 }
 
 SlidePot Sensor(1500,0); // copy calibration from Lab 7
-
+/*
 void TIMG12_IRQHandler(void){uint32_t pos,msg;
   if((TIMG12->CPU_INT.IIDX) == 1){
 
   }
 }
+*/
+uint16_t vertical_result;
+uint16_t horrizontal_result;
+uint16_t slidepot_result;
+
 
 uint8_t TExaS_LaunchPadLogicPB27PB26(void){
   return (0x80|((GPIOB->DOUT31_0>>26)&0x03));
@@ -71,7 +77,7 @@ const char *Phrases[3][4]={
   {Language_English,Language_Spanish,Language_Portuguese,Language_French}
 };
 // use main1 to observe special characters
-int main(void){ // main1
+int main1(void){ // main1
     char l;
   __disable_irq();
   PLL_Init(); // set bus speed
@@ -143,13 +149,19 @@ int main2(void){ // main2
 }
 
 // use main3 to test switches and LEDs
-int main3(void){ // main3
+int main(void){ // main3
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
+  joystickSlidePotHandlerInit();
+  __enable_irq();
+  IOMUX->SECCFG.PINCM[PA31INDEX] = 0x81;
+  IOMUX->SECCFG.PINCM[PA28INDEX] = 0x81;
+  IOMUX->SECCFG.PINCM[PA24INDEX] = 0x81;
+  GPIOA->DOE31_0 |= (1<<31) | (1<<28) | (1<<24);
+  GPIOA->DOUT31_0 = (1<<31) | (1<<28) | (1<<24);
   while(1){
     // write code to test switches and LEDs
-
   }
 }
 // use main4 to test sound outputs
