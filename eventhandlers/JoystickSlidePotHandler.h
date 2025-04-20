@@ -2,7 +2,7 @@
 #define JOYSTICKSLIDEPOTHANDLER_H
 
 #include "Globals.h"
-#include "../inc/LaunchPad.h"
+#include "LaunchPad.h"
 #include <ti/devices/msp/msp.h>
 
 void joystickSlidePotHandlerInit();
