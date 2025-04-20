@@ -12,8 +12,6 @@ Engine::Engine() {
 // Blocks execution until an event is in the queue
 enum Event Engine::pollQueue() {
     enum Event current = NOEVENT;
-    while (current == NOEVENT) {
-        current = this->eventQueue.get();
-    }
+    while (!this->eventQueue.get(&current)) {}
     return current;
 }

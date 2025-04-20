@@ -9,4 +9,10 @@
 
 extern const uint16_t battleship_board[];
 
+extern const uint16_t two_space_battleship1[];
+extern const uint16_t two_space_battleship2[];
+extern const uint16_t three_space_battleship[];
+extern const uint16_t four_space_battleship[];
+extern const uint16_t five_space_battleship[];
+
 #endif /* __images_h */

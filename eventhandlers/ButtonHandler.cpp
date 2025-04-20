@@ -30,45 +30,45 @@ void Button_IRQHandler(void) {
 
 
   //Each condition checks current value of pin and previous value to determine if button is pressed and unpressed
-  if((GPIOB->DOUT31_0 &= (1<<15) != 0) && allEvents.getLastElement() == BUTTON3_UNPRESS)
+  if((GPIOB->DOUT31_0 &= (1<<15) != 0) && engineState.eventQueue.getLastElement() == BUTTON3_UNPRESS)
   {
-    allEvents.put(BUTTON3_PRESS);
+    engineState.eventQueue.put(BUTTON3_PRESS);
     //while(GPIOB->DOUT31_0 &= (1<<15) != 0) {}
     //allEvents.put(BUTTON3_UNPRESS);
   }
-  else if((GPIOB->DOUT31_0 &= (1<<15) == 0) && allEvents.getLastElement() == BUTTON3_PRESS)
+  else if((GPIOB->DOUT31_0 &= (1<<15) == 0) && engineState.eventQueue.getLastElement() == BUTTON3_PRESS)
   {
-    allEvents.put(BUTTON3_UNPRESS);
+    engineState.eventQueue.put(BUTTON3_UNPRESS);
   }
-  else if((GPIOB->DOUT31_0 &= (1<<16) != 0) && allEvents.getLastElement() == BUTTON1_UNPRESS)
+  else if((GPIOB->DOUT31_0 &= (1<<16) != 0) && engineState.eventQueue.getLastElement() == BUTTON1_UNPRESS)
   {
-    allEvents.put(BUTTON1_PRESS);
+    engineState.eventQueue.put(BUTTON1_PRESS);
     //while(GPIOB->DOUT31_0 &= (1<<16) != 0) {}
     //allEvents.put(BUTTON1_UNPRESS);
   }
-  else if((GPIOB->DOUT31_0 &= (1<<16) == 0) && allEvents.getLastElement() == BUTTON1_PRESS)
+  else if((GPIOB->DOUT31_0 &= (1<<16) == 0) && engineState.eventQueue.getLastElement() == BUTTON1_PRESS)
   {
-    allEvents.put(BUTTON1_UNPRESS);
+    engineState.eventQueue.put(BUTTON1_UNPRESS);
   }
-  else if((GPIOB->DOUT31_0 &= (1<<17) != 0) && allEvents.getLastElement() == BUTTON2_PRESS)
+  else if((GPIOB->DOUT31_0 &= (1<<17) != 0) && engineState.eventQueue.getLastElement() == BUTTON2_PRESS)
   {
-    allEvents.put(BUTTON2_PRESS);
+    engineState.eventQueue.put(BUTTON2_PRESS);
     //while(GPIOB->DOUT31_0 &= (1<<17) != 0) {}
     //allEvents.put(BUTTON2_UNPRESS);
   }
-  else if((GPIOB->DOUT31_0 &= (1<<17) == 0) && allEvents.getLastElement() == BUTTON2_UNPRESS)
+  else if((GPIOB->DOUT31_0 &= (1<<17) == 0) && engineState.eventQueue.getLastElement() == BUTTON2_UNPRESS)
   {
-    allEvents.put(BUTTON2_UNPRESS);
+    engineState.eventQueue.put(BUTTON2_UNPRESS);
   }
-  else if((GPIOB->DOUT31_0 &= (1<<18) != 0) && allEvents.getLastElement() == BUTTON0_UNPRESS)
+  else if((GPIOB->DOUT31_0 &= (1<<18) != 0) && engineState.eventQueue.getLastElement() == BUTTON0_UNPRESS)
   {
-    allEvents.put(BUTTON0_PRESS);
+    engineState.eventQueue.put(BUTTON0_PRESS);
     //while(GPIOB->DOUT31_0 &= (1<<18) != 0) {}
     //allEvents.put(BUTTON0_UNPRESS);
   }
-  else if((GPIOB->DOUT31_0 &= (1<<18) == 0) && allEvents.getLastElement() == BUTTON0_UNPRESS)
+  else if((GPIOB->DOUT31_0 &= (1<<18) == 0) && engineState.eventQueue.getLastElement() == BUTTON0_UNPRESS)
   {
-    allEvents.put(BUTTON0_UNPRESS);
+    engineState.eventQueue.put(BUTTON0_UNPRESS);
   }
   //GPIOB->CPU_INT.ICLR = 0x00200000; // clear bit 21
 }

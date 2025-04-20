@@ -7,6 +7,4 @@
 
 void buttonHandlerInit();
 
-EventQueue allEvents = new EventQueue();
-
 #endif

@@ -7,17 +7,23 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <ti/devices/msp/msp.h>
-//#include "../inc/ST7735.h"
+#include "../inc/ST7735.h"
 #include "../inc/Clock.h"
 #include "../inc/LaunchPad.h"
 #include "../inc/TExaS.h"
 #include "../inc/Timer.h"
 #include "../inc/SlidePot.h"
 #include "../inc/DAC5.h"
+#include "../inc/UART.h"
+#include "EngineState.h"
 #include "SmallFont.h"
 #include "Sound.h"
+#include "Events.h"
+#include "Globals.h"
+#include "images/ImageTools.h"
 #include "images/images.h"
 #include "eventhandlers/JoystickSlidePotHandler.h"
+#include "eventhandlers/ButtonHandler.h"
 extern "C" void __disable_irq(void);
 extern "C" void __enable_irq(void);
 extern "C" void TIMG12_IRQHandler(void);
@@ -81,7 +87,7 @@ int main1(void){ // main1
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
-  ButtonHandlerInit();
+  buttonHandlerInit();
   TimerG12_IntArm(2666667, 0); //Initialize the timer at 30Hz
   __enable_irq();
 
@@ -124,10 +130,46 @@ int main(void){ // main2
   ST7735_InitPrintf();
     //note: if you colors are weird, see different options for
     // ST7735_InitR(INITR_REDTAB); inside ST7735_InitPrintf()
-  ST7735_SetRotation(2);
+  //ST7735_SetRotation(2);
   ST7735_FillScreen(ST7735_BLACK);
 
+  Sprite TwoSpaceBattleship1 = Sprite(two_space_battleship1, BOARDSPACEX(0), BOARDSPACEY(9, 22), 11, 22);
+  Sprite TwoSpaceBattleship2 = Sprite(two_space_battleship2, BOARDSPACEX(2), BOARDSPACEY(9, 22), 11, 22);
+  Sprite ThreeSpaceBattleship = Sprite(three_space_battleship, BOARDSPACEX(4), BOARDSPACEY(9, 33), 11, 33);
+  Sprite FourSpaceBattleship = Sprite(four_space_battleship, BOARDSPACEX(6), BOARDSPACEY(9, 44), 11, 44);
+  Sprite FiveSpaceBattleship = Sprite(five_space_battleship, BOARDSPACEX(8), BOARDSPACEY(9, 55), 11, 55);
+
   ST7735_DrawBitmap(0, 160, battleship_board, 128, 160);
+
+  {
+    uint16_t sprite_temp[TwoSpaceBattleship1.size()];
+    TwoSpaceBattleship1.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(TwoSpaceBattleship1, sprite_temp);
+  }
+
+  {
+    uint16_t sprite_temp[TwoSpaceBattleship2.size()];
+    TwoSpaceBattleship2.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(TwoSpaceBattleship2, sprite_temp);
+  }
+
+  {
+    uint16_t sprite_temp[ThreeSpaceBattleship.size()];
+    ThreeSpaceBattleship.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(ThreeSpaceBattleship, sprite_temp);
+  }
+
+  {
+    uint16_t sprite_temp[FourSpaceBattleship.size()];
+    FourSpaceBattleship.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(FourSpaceBattleship, sprite_temp);
+  }
+
+  {
+    uint16_t sprite_temp[FiveSpaceBattleship.size()];
+    FiveSpaceBattleship.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(FiveSpaceBattleship, sprite_temp);
+  }
   
   
   while(1){
@@ -140,6 +182,9 @@ int main3(void){ // main3
   PLL_Init(); // set bus speed
   LaunchPad_Init();
   joystickSlidePotHandlerInit();
+  ST7735_InitPrintf();
+  ST7735_SetCursor(0, 0);
+  ST7735_FillScreen(ST7735_BLACK);
   __enable_irq();
   IOMUX->SECCFG.PINCM[PA31INDEX] = 0x81;
   IOMUX->SECCFG.PINCM[PA28INDEX] = 0x81;
@@ -147,7 +192,63 @@ int main3(void){ // main3
   GPIOA->DOE31_0 |= (1<<31) | (1<<28) | (1<<24);
   GPIOA->DOUT31_0 = (1<<31) | (1<<28) | (1<<24);
   while(1){
-    // write code to test switches and LEDs
+    enum Event next = engineState.pollQueue();
+    switch (next) {
+      case JOYSTICK_RETURN:
+        printf("Joystick Return"); break;
+      case JOYSTICK_DOWN:
+        printf("Joystick Down"); break;
+      case JOYSTICK_DOWNLEFT:
+        printf("Joystick Down Left"); break;
+      case JOYSTICK_DOWNRIGHT:
+        printf("Joystick Down Right"); break;
+      case JOYSTICK_RIGHT:
+        printf("Joystick Right"); break;
+      case JOYSTICK_UPRIGHT:
+        printf("Joystick Up Right"); break;
+      case JOYSTICK_UPLEFT:
+        printf("Joystick Up Left"); break;
+      case JOYSTICK_LEFT:
+        printf("Joystick Left"); break;
+      case JOYSTICK_UP:
+        printf("Joystick Up"); break;
+      case BUTTON0_UNPRESS:
+        printf("Button0 Unpress"); break;
+      case BUTTON1_UNPRESS:
+        printf("Button1 Unpress"); break;
+      case BUTTON2_UNPRESS:
+        printf("Button2 Unpress"); break;
+      case BUTTON3_UNPRESS:
+        printf("Button3 Unpress"); break;
+      case BUTTON0_PRESS:
+        printf("Button0 Press"); break;
+      case BUTTON1_PRESS:
+        printf("Button1 Press"); break;
+      case BUTTON2_PRESS:
+        printf("Button2 Press"); break;
+      case BUTTON3_PRESS:
+        printf("Button3 Press"); break;
+      case SLIDEPOT0:
+        printf("SlidePot 0"); break;
+      case SLIDEPOT1:
+        printf("SlidePot 1"); break;
+      case SLIDEPOT2:
+        printf("SlidePot 2"); break;
+      case SLIDEPOT3:
+        printf("SlidePot 3"); break;
+      case SLIDEPOT4:
+        printf("SlidePot 4"); break;
+      case SLIDEPOT5:
+        printf("SlidePot 5"); break;
+      case SLIDEPOT6:
+        printf("SlidePot 6"); break;
+      default:
+        printf("Unknown Event,\nvalue = %d", next); break;
+    }
+    Clock_Delay1ms(250);
+    ST7735_SetCursor(0, 0);
+    printf("                  \n                 ");
+    ST7735_SetCursor(0, 0);
   }
 }
 // use main4 to test sound outputs

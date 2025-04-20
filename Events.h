@@ -28,7 +28,7 @@ enum Event {
     BUTTON1_PRESS, BUTTON1_UNPRESS,
     BUTTON2_PRESS, BUTTON2_UNPRESS,
     BUTTON3_PRESS, BUTTON3_UNPRESS,
-    STARTINGPRESS
+    STARTINGPRESS,
 
     /*
     * Joystick                   
@@ -93,6 +93,7 @@ class EventQueue {
         bool get(enum Event * event);
         bool full();
         bool empty();
+        enum Event getLastElement();
 };
 
 #endif

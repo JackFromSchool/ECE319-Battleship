@@ -21,7 +21,7 @@ bool EventQueue::put(enum Event event) {
     }
     Buf[PutI] = event;
     PutI++;
-    printf("%d", event);
+    //printf("%d", event);
     return true; 
 }
 
