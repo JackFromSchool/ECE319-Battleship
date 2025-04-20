@@ -54,13 +54,13 @@ void joystickSlidePotHandlerInit() {
     ADC1->ULLMEM.SCOMP0 = 0;                // 10) 8 sample clocks
     ADC1->ULLMEM.CPU_INT.IMASK = 0;         // 11) no interrupt
     // Arm Interrupts
-    TimerG12_IntArm(2666666, 2);
+    TimerA0_IntArm(10000, 255, 2);
 
 }
 
 extern "C"
-void TIMG12_IRQHandler(void) {
-    if ((TIMG12->CPU_INT.IIDX) == 1) {
+void TIMA0_IRQHandler(void) {
+    if ((TIMA0->CPU_INT.IIDX) == 1) {
         ADC0->ULLMEM.CTL0 |= 0x00000001;             // 1) enable conversions
         ADC0->ULLMEM.CTL1 |= 0x00000100;             // 2) start ADC
         uint32_t volatile delay=ADC0->ULLMEM.STATUS; // 3) time to let ADC start
