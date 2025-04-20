@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <ti/devices/msp/msp.h>
-#include "../inc/ST7735.h"
+//#include "../inc/ST7735.h"
 #include "../inc/Clock.h"
 #include "../inc/LaunchPad.h"
 #include "../inc/TExaS.h"
@@ -42,9 +42,12 @@ SlidePot Sensor(1500,0); // copy calibration from Lab 7
 
 void TIMG12_IRQHandler(void){uint32_t pos,msg;
   if((TIMG12->CPU_INT.IIDX) == 1){
-
+    Button_IRQHandler();
   }
 }
+
+//So if I have a timer that checks the button's input every certain period, then it needs to check both the current input and the previous input
+//in order to determine whether the button has been pressed or not. How can I determine the button's previous input? Static Variable?
 
 uint8_t TExaS_LaunchPadLogicPB27PB26(void){
   return (0x80|((GPIOB->DOUT31_0>>26)&0x03));
@@ -76,6 +79,11 @@ int main(void){ // main1
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
+  ButtonHandlerInit();
+  TimerG12_IntArm(2666667, 0); //Initialize the timer at 30Hz
+  __enable_irq();
+
+  /*
   ST7735_InitPrintf();
   ST7735_FillScreen(0x0000);            // set screen to black
   for(int myPhrase=0; myPhrase<= 2; myPhrase++){
@@ -103,6 +111,7 @@ int main(void){ // main1
       }
     }
   }
+  */
 }
 
 // use main2 to observe graphics

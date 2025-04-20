@@ -28,6 +28,7 @@ enum Event {
     BUTTON1_PRESS, BUTTON1_UNPRESS,
     BUTTON2_PRESS, BUTTON2_UNPRESS,
     BUTTON3_PRESS, BUTTON3_UNPRESS,
+    STARTINGPRESS
 
     /*
     * Joystick                   
@@ -82,13 +83,14 @@ enum Event {
 */
 class EventQueue {
     private:
-        enum Event buf[QUEUE_SIZE];
+        enum Event Buf[QUEUE_SIZE];
         int GetI;
         int PutI;
+        enum Event lastElement;
     public:
         EventQueue();
-        void put(enum Event event);
-        enum Event get();
+        bool put(enum Event event);
+        bool get(enum Event * event);
         bool full();
         bool empty();
 };
