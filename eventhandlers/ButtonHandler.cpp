@@ -1,6 +1,18 @@
 #include "ButtonHandler.h"
 #include "Events.h"
 
+
+class ButtonState {
+  public:
+    uint32_t lastValue0;
+    uint32_t lastValue1;
+    uint32_t lastValue2;
+    uint32_t lastValue3;
+    ButtonState();
+};
+
+
+
 void ButtonHandlerInit() {
     // Configure Button IO
     IOMUX->SECCFG.PINCM[PA15INDEX] = 0x40081; //SW4
