@@ -3,6 +3,7 @@
 
 #include "Events.h"
 #include "images/ImageTools.h"
+#include "images/images.h"
 
 /*
     General configuration state required for the Engine
