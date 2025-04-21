@@ -133,11 +133,17 @@ int main(void){ // main2
   //ST7735_SetRotation(2);
   ST7735_FillScreen(ST7735_BLACK);
 
-  Sprite TwoSpaceBattleship1 = Sprite(two_space_battleship1, BOARDSPACEX(0), BOARDSPACEY(9, 22), 11, 22);
-  Sprite TwoSpaceBattleship2 = Sprite(two_space_battleship2, BOARDSPACEX(2), BOARDSPACEY(9, 22), 11, 22);
-  Sprite ThreeSpaceBattleship = Sprite(three_space_battleship, BOARDSPACEX(4), BOARDSPACEY(9, 33), 11, 33);
-  Sprite FourSpaceBattleship = Sprite(four_space_battleship, BOARDSPACEX(6), BOARDSPACEY(9, 44), 11, 44);
-  Sprite FiveSpaceBattleship = Sprite(five_space_battleship, BOARDSPACEX(8), BOARDSPACEY(9, 55), 11, 55);
+  Sprite TwoSpaceBattleship1 = Sprite(two_space_battleship1, BOARDSPACEX(0), BOARDSPACEY(9), 11, 22);
+  Sprite TwoSpaceBattleship2 = Sprite(two_space_battleship2, BOARDSPACEX(2), BOARDSPACEY(9), 11, 22);
+  Sprite ThreeSpaceBattleship = Sprite(three_space_battleship, BOARDSPACEX(4), BOARDSPACEY(9), 11, 33);
+  Sprite FourSpaceBattleship = Sprite(four_space_battleship, BOARDSPACEX(6), BOARDSPACEY(9), 11, 44);
+  Sprite FiveSpaceBattleship = Sprite(five_space_battleship, BOARDSPACEX(8), BOARDSPACEY(9), 11, 55);
+
+  Sprite TwoSpaceBattleship190 = Sprite(two_space_battleship190, BOARDSPACEX(8), BOARDSPACEY(0), 22, 11);
+  Sprite TwoSpaceBattleship290 = Sprite(two_space_battleship290, BOARDSPACEX(6), BOARDSPACEY(1), 22, 11);
+  Sprite ThreeSpaceBattleship90 = Sprite(three_space_battleship90, BOARDSPACEX(4), BOARDSPACEY(2), 33, 11);
+  Sprite FourSpaceBattleship90 = Sprite(four_space_battleship90, BOARDSPACEX(2), BOARDSPACEY(3), 44, 11);
+  Sprite FiveSpaceBattleship90 = Sprite(five_space_battleship90, BOARDSPACEX(0), BOARDSPACEY(4), 55, 11);
 
   ST7735_DrawBitmap(0, 160, battleship_board, 128, 160);
 
@@ -171,6 +177,36 @@ int main(void){ // main2
     DRAWSPRITE(FiveSpaceBattleship, sprite_temp);
   }
   
+  // 90 Degrees
+  {
+    uint16_t sprite_temp[TwoSpaceBattleship190.size()];
+    TwoSpaceBattleship190.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(TwoSpaceBattleship190, sprite_temp);
+  }
+
+  {
+    uint16_t sprite_temp[TwoSpaceBattleship290.size()];
+    TwoSpaceBattleship290.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(TwoSpaceBattleship290, sprite_temp);
+  }
+
+  {
+    uint16_t sprite_temp[ThreeSpaceBattleship90.size()];
+    ThreeSpaceBattleship90.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(ThreeSpaceBattleship90, sprite_temp);
+  }
+
+  {
+    uint16_t sprite_temp[FourSpaceBattleship90.size()];
+    FourSpaceBattleship90.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(FourSpaceBattleship90, sprite_temp);
+  }
+
+  {
+    uint16_t sprite_temp[FiveSpaceBattleship90.size()];
+    FiveSpaceBattleship90.fill_background(battleship_board, sprite_temp);
+    DRAWSPRITE(FiveSpaceBattleship90, sprite_temp);
+  }
   
   while(1){
   }

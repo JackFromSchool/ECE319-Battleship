@@ -7,7 +7,7 @@
 // Bottom Right is 10, 10
 // Switches to pixel coord needed to render sprite.
 #define BOARDSPACEX(x) (x*12 + 4)
-#define BOARDSPACEY(y, height) (y*12 + 4 + 11)
+#define BOARDSPACEY(y) (y*12 + 4 + 11)
 
 #define DRAWSPRITE(sprite, sprite_ptr) \
     ST7735_DrawBitmap(sprite.get_x(), sprite.get_y(), sprite_ptr, sprite.get_width(), sprite.get_height())

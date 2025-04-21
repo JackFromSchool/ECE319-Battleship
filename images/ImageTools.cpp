@@ -42,7 +42,7 @@ void Sprite::fill_background(const uint16_t *background, uint16_t *copy) {
     for (uint32_t row = 0; row < this->height; row++) {
         for (uint32_t column = 0; column < this->width; column++) {
             if (this->sprite_pointer[row * this->width + column] == 0xFFFF) {
-                copy[row * this->width + column] = background[((this->y - row) * 128) + this->x + column];
+                copy[row * this->width + column] = background[((160 - this->y + row) * 128) + this->x + column];
             } else {
                 copy[row * this->width + column] = this->sprite_pointer[row * this->width + column];
             }
