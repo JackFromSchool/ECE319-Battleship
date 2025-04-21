@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//Debug/eventhandlers/subdir_rules.mk=UTF-8
 encoding//Debug/eventhandlers/subdir_vars.mk=UTF-8
+encoding//Debug/gamestatehandlers/subdir_rules.mk=UTF-8
+encoding//Debug/gamestatehandlers/subdir_vars.mk=UTF-8
 encoding//Debug/images/pipedreams/subdir_rules.mk=UTF-8
 encoding//Debug/images/pipedreams/subdir_vars.mk=UTF-8
 encoding//Debug/images/subdir_rules.mk=UTF-8

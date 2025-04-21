@@ -9,6 +9,7 @@ Engine::Engine() {
     this->audio = true;
     this->playmode = SINGLE_BOARD;
     this->language = ENGLISH;
+    this->gamestate = MENU;
     this->eventQueue = EventQueue();
 }
 

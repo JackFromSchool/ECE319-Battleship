@@ -12,6 +12,7 @@
 enum GameState {
     MENU,
     CHARACTER_SELECT,
+    BOARD_PLACEMENT,
     ACTIVE_GAME,
     END_SCREEN,
     REPLAY

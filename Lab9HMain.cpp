@@ -24,6 +24,11 @@
 #include "images/images.h"
 #include "eventhandlers/JoystickSlidePotHandler.h"
 #include "eventhandlers/ButtonHandler.h"
+#include "gamestatehandlers/Menu.h"
+#include "gamestatehandlers/ActiveGame.h"
+#include "gamestatehandlers/BoardPlacement.h"
+#include "gamestatehandlers/CharacterSelect.h"
+#include "gamestatehandlers/EndScreen.h"
 extern "C" void __disable_irq(void);
 extern "C" void __enable_irq(void);
 extern "C" void TIMG12_IRQHandler(void);
@@ -314,24 +319,75 @@ int main4(void){ uint32_t last=0,now;
 // ALL ST7735 OUTPUT MUST OCCUR IN MAIN
 int main5(void){ // final main
   __disable_irq();
-  PLL_Init(); // set bus speed
+  PLL_Init();
   LaunchPad_Init();
   ST7735_InitPrintf();
-    //note: if you colors are weird, see different options for
-    // ST7735_InitR(INITR_REDTAB); inside ST7735_InitPrintf()
   ST7735_FillScreen(ST7735_BLACK);
   Sensor.Init(); // PB18 = ADC1 channel 5, slidepot
   Sound_Init();  // initialize sound
   TExaS_Init(0,0,&TExaS_LaunchPadLogicPB27PB26); // PB27 and PB26
-    // initialize interrupts on TimerG12 at 30 Hz
-  
-  // initialize all data structures
+  joystickSlidePotHandlerInit();
   __enable_irq();
 
+  initMenu();
   while(1){
-    // wait for semaphore
-       // clear semaphore
-       // update ST7735R
-    // check for end game or level switch
+    enum Event event = engineState.pollQueue();
+    enum GameState next_state;
+    switch (engineState.gamestate) {
+      case MENU:
+        next_state = handleMenu(event);
+        break;
+
+      case CHARACTER_SELECT:
+        next_state = handleCharacterSelect(event);
+        break;
+
+      case BOARD_PLACEMENT:
+        next_state = handleBoardPlacement(event);
+        break;
+      
+      case ACTIVE_GAME:
+        next_state = handleActiveGame(event);
+        break;
+
+      case END_SCREEN:
+        next_state = handleEndScreen(event);
+        break;
+      
+      case REPLAY:
+        // Don't come to this state.
+        next_state = MENU;
+        break;
+    }
+
+    if (next_state != engineState.gamestate) {
+      switch (next_state) {
+        case MENU:
+          initMenu();
+          break;
+
+        case CHARACTER_SELECT:
+          initCharacterSelect();
+          break;
+
+        case BOARD_PLACEMENT:
+          initBoardPlacement();
+          break;
+        
+        case ACTIVE_GAME:
+          initActiveGame();
+          break;
+
+        case END_SCREEN:
+          initEndScreen();
+          break;
+        
+        case REPLAY:
+          // Don't come to this state.
+          break;
+      }
+      engineState.gamestate = next_state;
+    }
+
   }
 }
