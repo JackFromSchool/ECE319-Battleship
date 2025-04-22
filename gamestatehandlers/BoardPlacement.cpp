@@ -1,6 +1,8 @@
 #include "BoardPlacement.h"
+#include "EngineState.h"
 #include "Events.h"
 #include "Globals.h"
+#include <cstddef>
 
 void initBoardPlacement() {
     engineState.isPlayer1Turn = true;
@@ -10,13 +12,13 @@ void initBoardPlacement() {
 enum GameState handleBoardPlacement(enum Event event) {
     if(event == BUTTON0_PRESS || event == BUTTON0_UNPRESS || event == BUTTON1_PRESS || event == BUTTON1_UNPRESS || event == BUTTON2_PRESS || event == BUTTON2_UNPRESS)
     {
-        return;
+        return BOARD_PLACEMENT;
     }
     if(engineState.isPlayer1Turn)
     {
         switch(event)
         {
-            case(JOYSTICK_DOWN)
+            case JOYSTICK_DOWN:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player1.numShipsPlaced);
                 {
@@ -36,7 +38,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player1.five_ship.board_pos_y--;
                         break;
                 }
-            case(JOYSTICK_UP)
+            case JOYSTICK_UP:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player1.numShipsPlaced)
                 {
@@ -56,7 +58,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player1.five_ship.board_pos_y++;
                         break;
                 }
-            case(JOYSTICK_LEFT)
+            case JOYSTICK_LEFT:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player1.numShipsPlaced)
                 {
@@ -76,7 +78,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player1.five_ship.board_pos_x--;
                         break;
                 }
-            case(JOYSTICK_RIGHT)
+            case JOYSTICK_RIGHT:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player1.numShipsPlaced)
                 {
@@ -96,7 +98,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player1.five_ship.board_pos_x++;
                         break;
                 }
-            case(BUTTON3_PRESS)
+            case BUTTON3_PRESS:
             {
                 switch(engineState.player1.numShipsPlaced)
                 {
@@ -125,7 +127,7 @@ enum GameState handleBoardPlacement(enum Event event) {
     {
         switch(event)
         {
-            case(JOYSTICK_DOWN)
+            case JOYSTICK_DOWN:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player2.numShipsPlaced)
                 {
@@ -145,7 +147,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player2.five_ship.board_pos_y--;
                         break;
                 }
-            case(JOYSTICK_UP)
+            case JOYSTICK_UP:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player2.numShipsPlaced)
                 {
@@ -165,7 +167,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player2.five_ship.board_pos_y++;
                         break;
                 }
-            case(JOYSTICK_LEFT)
+            case JOYSTICK_LEFT:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player2.numShipsPlaced)
                 {
@@ -185,7 +187,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player2.five_ship.board_pos_x--;
                         break;
                 }
-            case(JOYSTICK_RIGHT)
+            case JOYSTICK_RIGHT:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player2.numShipsPlaced)
                 {
@@ -205,7 +207,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player2.five_ship.board_pos_x++;
                         break;
                 }
-            case(BUTTON3_PRESS)
+            case BUTTON3_PRESS:
             {
                 switch(engineState.player2.numShipsPlaced)
                 {
@@ -230,6 +232,7 @@ enum GameState handleBoardPlacement(enum Event event) {
         }
         engineState.player2.drawMyBoard();
     }
+    return BOARD_PLACEMENT;
 }
 
 //update the board's placement and continuously refresh the board
