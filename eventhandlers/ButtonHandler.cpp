@@ -54,7 +54,8 @@ void Button_IRQHandler(void) {
     engineState.eventQueue.put(BUTTON3_UNPRESS);
     button3_prev = BUTTON3_UNPRESS;
   }
-  else if((GPIOB->DOUT31_0 &= (1<<16) != 0) && button1_prev == BUTTON1_UNPRESS)
+
+  if((GPIOB->DOUT31_0 &= (1<<16) != 0) && button1_prev == BUTTON1_UNPRESS)
   {
     engineState.eventQueue.put(BUTTON1_PRESS);
     button1_prev = BUTTON1_PRESS;
@@ -64,7 +65,8 @@ void Button_IRQHandler(void) {
     engineState.eventQueue.put(BUTTON1_UNPRESS);
     button1_prev = BUTTON1_UNPRESS;
   }
-  else if((GPIOB->DOUT31_0 &= (1<<17) != 0) && button2_prev  == BUTTON2_UNPRESS)
+
+  if((GPIOB->DOUT31_0 &= (1<<17) != 0) && button2_prev  == BUTTON2_UNPRESS)
   {
     engineState.eventQueue.put(BUTTON2_PRESS);
     button2_prev = BUTTON2_PRESS;
@@ -74,7 +76,8 @@ void Button_IRQHandler(void) {
     engineState.eventQueue.put(BUTTON2_UNPRESS);
     button2_prev = BUTTON2_UNPRESS;
   }
-  else if((GPIOB->DOUT31_0 &= (1<<18) != 0) && button0_prev == BUTTON0_UNPRESS)
+
+  if((GPIOB->DOUT31_0 &= (1<<18) != 0) && button0_prev == BUTTON0_UNPRESS)
   {
     engineState.eventQueue.put(BUTTON0_PRESS);
     button0_prev = BUTTON0_PRESS;
