@@ -340,11 +340,12 @@ int main(void){ // final main
   Sound_Init();  // initialize sound
   TExaS_Init(0,0,&TExaS_LaunchPadLogicPB27PB26); // PB27 and PB26
   joystickSlidePotHandlerInit();
+  buttonHandlerInit();
   __enable_irq();
 
   engineState.eventQueue.emptyContents();
-  engineState.gamestate = BOARD_PLACEMENT;
-  initBoardPlacement();
+  engineState.gamestate = ACTIVE_GAME;
+  initActiveGame();
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;

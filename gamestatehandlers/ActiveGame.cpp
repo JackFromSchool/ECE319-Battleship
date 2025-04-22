@@ -66,7 +66,62 @@ static void tryMoveCursor(enum Event event) {
 }
 
 static bool isValidMove() {
-    // TODO
+    Player *current_player;
+    if (engineState.isPlayer1Turn) {
+        current_player = &engineState.player1;
+    } else {
+        current_player = &engineState.player2;
+    }
+
+    return current_player->enemy.board[current_player->cursor.y_pos][current_player->cursor.x_pos] == WATER;
+}
+
+void registerHit() {
+    Player *current_player;
+    Player *enemy;
+    if (engineState.isPlayer1Turn) {
+        current_player = &engineState.player1;
+        enemy = &engineState.player2;
+    } else {
+        current_player = &engineState.player2;
+        enemy = &engineState.player1;
+    }
+
+    enum BoardSpace *enemy_space = &enemy->mine.board[current_player->cursor.y_pos][current_player->cursor.x_pos];
+    enum BoardSpace *my_space = &current_player->enemy.board[current_player->cursor.y_pos][current_player->cursor.x_pos];
+    switch (*enemy_space) {
+        case TWO_SHIP0:
+            *enemy_space = TWO_SHIP0_HIT;
+            *my_space = HIT;
+            break;
+        case TWO_SHIP1:
+            *enemy_space = TWO_SHIP1_HIT;
+            *my_space = HIT;
+            break;
+        case THREE_SHIP:
+            *enemy_space = THREE_SHIP_HIT;
+            *my_space = HIT;
+            break;
+        case FOUR_SHIP:
+            *enemy_space = FOUR_SHIP_HIT;
+            *my_space = HIT;
+            break;
+        case FIVE_SHIP:
+            *enemy_space = FIVE_SHIP_HIT;
+            *my_space = HIT;
+            break;
+        case WATER:
+            *enemy_space = MISS;
+            *my_space = MISS;
+        default:
+            break;
+    }
+
+    if (engineState.isPlayer1Turn) {
+        engineState.player1.drawEnemyBoard();
+    } else {
+        engineState.player2.drawEnemyBoard();
+    }
 }
 
 void initActiveGame() {
@@ -76,6 +131,13 @@ void initActiveGame() {
 }
 
 enum GameState handleActiveGame(enum Event event) {
+    Player *current_player;
+    if (engineState.isPlayer1Turn) {
+        current_player = &engineState.player1;
+    } else {
+        current_player = &engineState.player2;
+    }
+
     switch (event) {
         case JOYSTICK_UP: case JOYSTICK_DOWN:
         case JOYSTICK_UPLEFT: case JOYSTICK_UPRIGHT:
@@ -87,11 +149,17 @@ enum GameState handleActiveGame(enum Event event) {
 
         case BUTTON1_PRESS:
             isMyBoard = !isMyBoard;
+            if (isMyBoard) {
+                current_player->drawMyBoard();
+            } else {
+                current_player->drawEnemyBoard();
+            }
             break;
         
         case BUTTON0_PRESS:
-            if (!isMyBoard) return ACTIVE_GAME;
-
+            if (isMyBoard) return ACTIVE_GAME;
+            if (!isValidMove()) return ACTIVE_GAME;
+            registerHit();
         default:
             return ACTIVE_GAME;
     }
