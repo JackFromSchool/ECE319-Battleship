@@ -40,7 +40,6 @@ void Button_IRQHandler(void) {
   //Check which pin is set high, then queue the ENUM for that pin onto the global Queue, wait for the button to be released (while loop),
   //How to represent low values because edge triggered interrupt doesn't do that
 
-
   //Each condition checks current value of pin and previous value to determine if button is pressed and unpressed
   if((GPIOB->DOUT31_0 &= (1<<15) != 0) && engineState.eventQueue.getLastElement() == BUTTON3_UNPRESS)
   {
