@@ -36,17 +36,7 @@ void TIMG6_IRQHandler(void) {
     static enum Event button2_prev = BUTTON2_UNPRESS;
     static enum Event button3_prev = BUTTON3_UNPRESS;
     //Each condition checks current value of pin and previous value to determine if button is pressed and unpressed
-    if((GPIOB->DOUT31_0 &= (1<<15) != 0) && button3_prev == BUTTON3_UNPRESS)
-    {
-      engineState.eventQueue.put(BUTTON3_PRESS);
-      button3_prev = BUTTON3_PRESS;
-    }
-    else if((GPIOB->DOUT31_0 &= (1<<15) == 0) && button3_prev == BUTTON3_PRESS)
-    {
-      engineState.eventQueue.put(BUTTON3_UNPRESS);
-      button3_prev = BUTTON3_UNPRESS;
-    }
-    else if((GPIOB->DOUT31_0 &= (1<<16) != 0) && button1_prev == BUTTON1_UNPRESS)
+    if((GPIOB->DOUT31_0 &= (1<<16) != 0) && button1_prev == BUTTON1_UNPRESS)
     {
       engineState.eventQueue.put(BUTTON1_PRESS);
       button1_prev = BUTTON1_PRESS;
@@ -56,7 +46,8 @@ void TIMG6_IRQHandler(void) {
       engineState.eventQueue.put(BUTTON1_UNPRESS);
       button1_prev = BUTTON1_UNPRESS;
     }
-    else if((GPIOB->DOUT31_0 &= (1<<17) != 0) && button2_prev  == BUTTON2_UNPRESS)
+
+    if((GPIOB->DOUT31_0 &= (1<<17) != 0) && button2_prev  == BUTTON2_UNPRESS)
     {
       engineState.eventQueue.put(BUTTON2_PRESS);
       button2_prev = BUTTON2_PRESS;
@@ -66,7 +57,8 @@ void TIMG6_IRQHandler(void) {
       engineState.eventQueue.put(BUTTON2_UNPRESS);
       button2_prev = BUTTON2_UNPRESS;
     }
-    else if((GPIOB->DOUT31_0 &= (1<<18) != 0) && button0_prev == BUTTON0_UNPRESS)
+
+    if((GPIOB->DOUT31_0 &= (1<<18) != 0) && button0_prev == BUTTON0_UNPRESS)
     {
       engineState.eventQueue.put(BUTTON0_PRESS);
       button0_prev = BUTTON0_PRESS;
@@ -77,5 +69,7 @@ void TIMG6_IRQHandler(void) {
       button0_prev = BUTTON0_UNPRESS;
     }
     //GPIOB->CPU_INT.ICLR = 0x00200000; // clear bit 21
+    //GPIOB->CPU_INT.ICLR = 0x00200000; // clear bit 21
   }
+
 }
