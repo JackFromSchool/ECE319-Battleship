@@ -60,6 +60,7 @@ class Ship {
         uint8_t ship_size;
         uint8_t num_hits;
         bool sunk;
+        bool placed;
         Ship(Sprite sprite, uint8_t ship_size);
 };
 
