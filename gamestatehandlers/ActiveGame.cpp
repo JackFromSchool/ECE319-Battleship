@@ -145,7 +145,6 @@ enum GameState handleActiveGame(enum Event event) {
         case JOYSTICK_LEFT: case JOYSTICK_RIGHT:
             tryMoveCursor(event);
             return ACTIVE_GAME;
-            break;
 
         case BUTTON1_PRESS:
             isMyBoard = !isMyBoard;
@@ -154,7 +153,7 @@ enum GameState handleActiveGame(enum Event event) {
             } else {
                 current_player->drawEnemyBoard();
             }
-            break;
+            return ACTIVE_GAME;
         
         case BUTTON0_PRESS:
             if (isMyBoard) return ACTIVE_GAME;
