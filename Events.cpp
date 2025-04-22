@@ -50,6 +50,10 @@ bool EventQueue::empty() {
     return GetI == PutI;
 }
 
+void EventQueue::emptyContents() {
+  GetI = PutI;
+}
+
 enum Event EventQueue::getLastElement()
 {
   return lastElement;

@@ -93,6 +93,7 @@ class EventQueue {
         bool get(enum Event * event);
         bool full();
         bool empty();
+        void emptyContents();
         enum Event getLastElement();
 };
 
