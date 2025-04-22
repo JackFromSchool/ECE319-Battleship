@@ -7,6 +7,7 @@
 void initBoardPlacement() {
     engineState.isPlayer1Turn = true;
     engineState.player1.drawMyBoard();
+    engineState.player1.two_ship0.isPlaced = true;
 }
 
 enum GameState handleBoardPlacement(enum Event event) {
@@ -38,6 +39,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player1.five_ship.board_pos_y--;
                         break;
                 }
+                break;
             case JOYSTICK_UP:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player1.numShipsPlaced)
@@ -58,6 +60,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player1.five_ship.board_pos_y++;
                         break;
                 }
+                break;
             case JOYSTICK_LEFT:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player1.numShipsPlaced)
@@ -78,6 +81,7 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player1.five_ship.board_pos_x--;
                         break;
                 }
+                break;
             case JOYSTICK_RIGHT:
                 //Get the object for Player 1, move the head of the ship in the specified direction
                 switch(engineState.player1.numShipsPlaced)
@@ -98,27 +102,26 @@ enum GameState handleBoardPlacement(enum Event event) {
                         engineState.player1.five_ship.board_pos_x++;
                         break;
                 }
+                break;
             case BUTTON3_PRESS:
             {
                 switch(engineState.player1.numShipsPlaced)
                 {
                     case 0:
-                        engineState.player1.two_ship0.isPlaced = true;
-                        break;
-                    case 1:
                         engineState.player1.two_ship1.isPlaced = true;
                         break;
-                    case 2:
+                    case 1:
                         engineState.player1.three_ship.isPlaced = true;
                         break;
-                    case 3:
+                    case 2:
                         engineState.player1.four_ship.isPlaced = true;
                         break;
-                    case 4:
+                    case 3:
                         engineState.player1.five_ship.isPlaced = true;
                         break;
                 }
                 engineState.player1.numShipsPlaced++;
+                break;
             }
         }
         engineState.player1.drawMyBoard();

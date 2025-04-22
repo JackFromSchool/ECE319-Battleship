@@ -62,6 +62,8 @@ class Ship {
         bool sunk;
         bool isPlaced;
         Ship(Sprite sprite, uint8_t ship_size);
+        void set_x(uint8_t new_x);
+        void set_y(uint8_t new_y);
 };
 
 class Cursor {
