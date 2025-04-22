@@ -22,6 +22,7 @@
 #include "Globals.h"
 #include "images/ImageTools.h"
 #include "images/images.h"
+#include "images/FontPrint.h"
 #include "eventhandlers/JoystickSlidePotHandler.h"
 #include "eventhandlers/ButtonHandler.h"
 #include "gamestatehandlers/Menu.h"
@@ -128,7 +129,7 @@ int main1(void){ // main1
 }
 
 // use main2 to observe graphics
-int main2(void){ // main2
+int main(void){ // main2
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
@@ -215,12 +216,15 @@ int main2(void){ // main2
   }
   */
 
-  
+  /*
   engineState.player1.mine.board[0][0] = HIT;
   engineState.player1.mine.board[1][0] = HIT;
   engineState.player1.mine.board[1][1] = MISS;
-  engineState.player1.drawEnemyBoard();
-  
+  engineState.player1.drawMyBoard();
+  */
+
+  printText("HI", 0, 7, 0xFFFF, 0x3333);
+
   while(1){
   }
 }
@@ -325,7 +329,7 @@ int main4(void){ uint32_t last=0,now;
   }
 }
 // ALL ST7735 OUTPUT MUST OCCUR IN MAIN
-int main(void){ // final main
+int main5(void){ // final main
   __disable_irq();
   PLL_Init();
   LaunchPad_Init();
