@@ -230,7 +230,7 @@ int main2(void){ // main2
 }
 
 // use main3 to test switches and LEDs
-int main(void){ // main3
+int main3(void){ // main3
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
@@ -330,7 +330,7 @@ int main4(void){ uint32_t last=0,now;
   }
 }
 // ALL ST7735 OUTPUT MUST OCCUR IN MAIN
-int main5(void){ // final main
+int main(void){ // final main
   __disable_irq();
   PLL_Init();
   LaunchPad_Init();
@@ -343,8 +343,8 @@ int main5(void){ // final main
   __enable_irq();
 
   engineState.eventQueue.emptyContents();
-  engineState.gamestate = ACTIVE_GAME;
-  initActiveGame();
+  engineState.gamestate = BOARD_PLACEMENT;
+  initBoardPlacement();
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;

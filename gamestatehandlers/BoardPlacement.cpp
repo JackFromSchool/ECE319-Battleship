@@ -1,5 +1,6 @@
 #include "BoardPlacement.h"
 #include "Events.h"
+#include "Globals.h"
 
 void initBoardPlacement() {
     engineState.isPlayer1Turn = true;

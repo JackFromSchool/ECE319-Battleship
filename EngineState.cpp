@@ -32,7 +32,8 @@ Player::Player() : two_ship0(Sprite(two_space_battleship1, BOARDSPACEX(5), BOARD
     three_ship(Sprite(three_space_battleship, BOARDSPACEX(5), BOARDSPACEY(5), 11, 33), 3),
     four_ship(Sprite(four_space_battleship, BOARDSPACEX(5), BOARDSPACEY(5), 11, 44), 4),
     five_ship(Sprite(five_space_battleship, BOARDSPACEX(5), BOARDSPACEY(5), 11, 55), 5) {
-
+    
+    this->numShipsPlaced = 0;
     this->enemy = Board();
     this->mine = Board();
     this->cursor = Cursor();
@@ -155,6 +156,7 @@ Ship::Ship(Sprite sprite, uint8_t ship_size) : sprite(sprite) {
     this->num_hits = 0;
     this->rotated = false;
     this->sunk = false;
+    this->isPlaced = false;
 }
 
 // Board ====================================================

@@ -60,6 +60,7 @@ class Ship {
         uint8_t ship_size;
         uint8_t num_hits;
         bool sunk;
+        bool isPlaced;
         Ship(Sprite sprite, uint8_t ship_size);
 };
 
@@ -74,6 +75,7 @@ class Player {
     public:
         Board enemy;
         Board mine;
+        uint8_t numShipsPlaced;
         Cursor cursor;
         Ship two_ship0;
         Ship two_ship1;
