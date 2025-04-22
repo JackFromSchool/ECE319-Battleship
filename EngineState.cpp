@@ -161,12 +161,12 @@ Ship::Ship(Sprite sprite, uint8_t ship_size) : sprite(sprite) {
 
 void Ship::set_x(uint8_t new_x) {
     this->board_pos_x = new_x;
-    this->sprite.set_x(new_x);
+    this->sprite.set_x(BOARDSPACEX(new_x));
 }
 
 void Ship::set_y(uint8_t new_y) {
     this->board_pos_y = new_y;
-    this->sprite.set_y(new_y);
+    this->sprite.set_y(BOARDSPACEY(new_y));
 }
 
 // Board ====================================================
