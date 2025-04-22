@@ -138,6 +138,7 @@ int main(void){ // main2
   //ST7735_SetRotation(2);
   ST7735_FillScreen(ST7735_BLACK);
 
+  /*
   Sprite TwoSpaceBattleship1 = Sprite(two_space_battleship1, BOARDSPACEX(0), BOARDSPACEY(9), 11, 22);
   Sprite TwoSpaceBattleship2 = Sprite(two_space_battleship2, BOARDSPACEX(2), BOARDSPACEY(9), 11, 22);
   Sprite ThreeSpaceBattleship = Sprite(three_space_battleship, BOARDSPACEX(4), BOARDSPACEY(9), 11, 33);
@@ -212,6 +213,13 @@ int main(void){ // main2
     FiveSpaceBattleship90.fill_background(battleship_board, sprite_temp);
     DRAWSPRITE(FiveSpaceBattleship90, sprite_temp);
   }
+  */
+
+  
+  engineState.player1.mine.board[0][0] = HIT;
+  engineState.player1.mine.board[1][0] = HIT;
+  engineState.player1.mine.board[1][1] = MISS;
+  engineState.player1.drawEnemyBoard();
   
   while(1){
   }
@@ -331,8 +339,9 @@ int main5(void){ // final main
 
   initMenu();
   while(1){
-    enum Event event = engineState.pollQueue();
+    enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;
+    // Call the event handler
     switch (engineState.gamestate) {
       case MENU:
         next_state = handleMenu(event);
@@ -359,7 +368,8 @@ int main5(void){ // final main
         next_state = MENU;
         break;
     }
-
+    // If we need to switch states,
+    // Call init on the new state
     if (next_state != engineState.gamestate) {
       switch (next_state) {
         case MENU:

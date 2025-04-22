@@ -47,6 +47,8 @@ class Board {
     public:
         enum BoardSpace board[10][10];
         Board();
+        void drawHitMiss();
+
 };
 
 class Ship {
@@ -79,6 +81,8 @@ class Player {
         Ship four_ship;
         Ship five_ship;
         Player();
+        void drawMyBoard();
+        void drawEnemyBoard();
 };
 
 /*

@@ -1,6 +1,8 @@
 #include "EngineState.h"
 #include "Events.h"
-
+#include "images/images.h"
+#include "images/ImageTools.h"
+#include "../inc/ST7735.h"
 
 // Engine ====================================================
 
@@ -11,6 +13,9 @@ Engine::Engine() {
     this->language = ENGLISH;
     this->gamestate = MENU;
     this->eventQueue = EventQueue();
+    this->player1 = Player();
+    this->player2 = Player();
+    this->isPlayer1Turn = true;
 }
 
 // Blocks execution until an event is in the queue
@@ -31,6 +36,107 @@ Player::Player() : two_ship0(Sprite(two_space_battleship1, BOARDSPACEX(5), BOARD
     this->enemy = Board();
     this->mine = Board();
     this->cursor = Cursor();
+}
+
+void Player::drawMyBoard() {
+    // Redraw Background
+    ST7735_DrawBitmap(0, 160, battleship_board, 128, 160);
+
+    {
+        uint16_t temp[this->two_ship0.sprite.size()];
+        this->two_ship0.sprite.fill_background(battleship_board, temp);
+        DRAWSPRITE(this->two_ship0.sprite, temp);
+    }
+
+    {
+        uint16_t temp[this->two_ship1.sprite.size()];
+        this->two_ship1.sprite.fill_background(battleship_board, temp);
+        DRAWSPRITE(this->two_ship1.sprite, temp);
+    }
+
+    {
+        uint16_t temp[this->three_ship.sprite.size()];
+        this->three_ship.sprite.fill_background(battleship_board, temp);
+        DRAWSPRITE(this->three_ship.sprite, temp);
+    }
+
+    {
+        uint16_t temp[this->four_ship.sprite.size()];
+        this->four_ship.sprite.fill_background(battleship_board, temp);
+        DRAWSPRITE(this->four_ship.sprite, temp);
+    }
+
+    {
+        uint16_t temp[this->five_ship.sprite.size()];
+        this->five_ship.sprite.fill_background(battleship_board, temp);
+        DRAWSPRITE(this->five_ship.sprite, temp);
+    }
+    
+    for (uint32_t row = 0; row < 10; row++) {
+        for (uint32_t column = 0; column < 10; column++) {
+            switch (this->mine.board[row][column]) {
+                case FIVE_SHIP_HIT: case FOUR_SHIP_HIT:
+                case THREE_SHIP_HIT: case TWO_SHIP0_HIT:
+                case TWO_SHIP1_HIT: case HIT:
+                    {
+                        Sprite sp = Sprite(hit_marker, BOARDSPACEX(column), BOARDSPACEY(row), 11, 11);
+                        uint16_t temp[sp.size()];
+                        sp.fill_background(battleship_board, temp);
+                        DRAWSPRITE(sp, temp);
+                    }
+                    break;
+                case MISS:
+                    {
+                        Sprite sp = Sprite(miss_marker, BOARDSPACEX(column), BOARDSPACEY(row), 11, 11);
+                        uint16_t temp[sp.size()];
+                        sp.fill_background(battleship_board, temp);
+                        DRAWSPRITE(sp, temp);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+}
+
+void Player::drawEnemyBoard() {
+        ST7735_DrawBitmap(0, 160, battleship_board, 128, 160);
+
+        for (uint32_t row = 0; row < 10; row++) {
+        for (uint32_t column = 0; column < 10; column++) {
+            switch (this->enemy.board[row][column]) {
+                case FIVE_SHIP_HIT: case FOUR_SHIP_HIT:
+                case THREE_SHIP_HIT: case TWO_SHIP0_HIT:
+                case TWO_SHIP1_HIT: case HIT:
+                    {
+                        Sprite sp = Sprite(hit_marker, BOARDSPACEX(column), BOARDSPACEY(row), 11, 11);
+                        uint16_t temp[sp.size()];
+                        sp.fill_background(battleship_board, temp);
+                        DRAWSPRITE(sp, temp);
+                    }
+                    break;
+                case MISS:
+                    {
+                        Sprite sp = Sprite(miss_marker, BOARDSPACEX(column), BOARDSPACEY(row), 11, 11);
+                        uint16_t temp[sp.size()];
+                        sp.fill_background(battleship_board, temp);
+                        DRAWSPRITE(sp, temp);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        {
+            Sprite sp = Sprite(cursor_marker, BOARDSPACEX(this->cursor.x_pos), BOARDSPACEY(this->cursor.y_pos), 11, 11);
+            uint16_t temp[sp.size()];
+            sp.fill_background(battleship_board, temp);
+            DRAWSPRITE(sp, temp);
+        }
+    }
 }
 
 // Cursor ====================================================

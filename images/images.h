@@ -21,4 +21,8 @@ extern const uint16_t three_space_battleship90[];
 extern const uint16_t four_space_battleship90[];
 extern const uint16_t five_space_battleship90[];
 
+extern const uint16_t miss_marker[];
+extern const uint16_t hit_marker[];
+extern const uint16_t cursor_marker[];
+
 #endif /* __images_h */
