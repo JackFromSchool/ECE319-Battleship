@@ -1,6 +1,7 @@
 #include "BoardPlacement.h"
 #include "Events.h"
-
+#include "Globals.h"
+/*
 void initBoardPlacement() {
     ST7735_DrawBitmap(0, 160, battleship_board, 128, 160);
 }
@@ -185,5 +186,5 @@ enum GameState handleBoardPlacement(enum Event event) {
         engineState.player2.drawMyBoard;
     }
 }
-
+*/
 //update the board's placement and continuously refresh the board

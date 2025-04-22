@@ -129,7 +129,7 @@ int main1(void){ // main1
 }
 
 // use main2 to observe graphics
-int main(void){ // main2
+int main2(void){ // main2
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
@@ -230,11 +230,12 @@ int main(void){ // main2
 }
 
 // use main3 to test switches and LEDs
-int main3(void){ // main3
+int main(void){ // main3
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
   joystickSlidePotHandlerInit();
+  buttonHandlerInit();
   ST7735_InitPrintf();
   ST7735_SetCursor(0, 0);
   ST7735_FillScreen(ST7735_BLACK);
