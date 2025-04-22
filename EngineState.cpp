@@ -3,6 +3,7 @@
 #include "images/images.h"
 #include "images/ImageTools.h"
 #include "../inc/ST7735.h"
+#include "../inc/Clock.h"
 
 // Engine ====================================================
 
@@ -23,6 +24,13 @@ enum Event Engine::pollQueue() {
     enum Event current = NOEVENT;
     while (!this->eventQueue.get(&current)) {}
     return current;
+}
+
+void Engine::switchPlayer() {
+    ST7735_FillScreen(0x0903);
+    isPlayer1Turn = !isPlayer1Turn;
+    Clock_Delay1ms(5000);
+
 }
 
 // Player ====================================================
@@ -102,7 +110,7 @@ void Player::drawMyBoard() {
 
 }
 
-void Player::drawEnemyBoard() {
+void Player::drawEnemyBoard(bool cursor) {
         ST7735_DrawBitmap(0, 160, battleship_board, 128, 160);
 
         for (uint32_t row = 0; row < 10; row++) {
@@ -131,7 +139,7 @@ void Player::drawEnemyBoard() {
             }
         }
 
-        {
+        if (cursor) {
             Sprite sp = Sprite(cursor_marker, BOARDSPACEX(this->cursor.x_pos), BOARDSPACEY(this->cursor.y_pos), 11, 11);
             uint16_t temp[sp.size()];
             sp.fill_background(battleship_board, temp);

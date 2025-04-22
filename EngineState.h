@@ -86,7 +86,7 @@ class Player {
         Ship five_ship;
         Player();
         void drawMyBoard();
-        void drawEnemyBoard();
+        void drawEnemyBoard(bool cursor);
 };
 
 /*
@@ -110,6 +110,7 @@ class Engine {
         Engine();
 
         enum Event pollQueue();
+        void switchPlayer();
 
 };
 

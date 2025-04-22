@@ -1,6 +1,7 @@
 #include "ActiveGame.h"
 #include "Events.h"
 #include "Globals.h"
+#include "../inc/Clock.h"
 
 static bool isMyBoard;
 
@@ -59,9 +60,9 @@ static void tryMoveCursor(enum Event event) {
     c->y_pos = newCursor.y_pos;
     
     if (engineState.isPlayer1Turn) {
-        engineState.player1.drawEnemyBoard();
+        engineState.player1.drawEnemyBoard(true);
     } else {
-        engineState.player2.drawEnemyBoard();
+        engineState.player2.drawEnemyBoard(true);
     }
 }
 
@@ -87,6 +88,7 @@ void registerHit() {
         enemy = &engineState.player1;
     }
 
+    bool hit = true;
     enum BoardSpace *enemy_space = &enemy->mine.board[current_player->cursor.y_pos][current_player->cursor.x_pos];
     enum BoardSpace *my_space = &current_player->enemy.board[current_player->cursor.y_pos][current_player->cursor.x_pos];
     switch (*enemy_space) {
@@ -113,20 +115,30 @@ void registerHit() {
         case WATER:
             *enemy_space = MISS;
             *my_space = MISS;
+            hit = false;
+            break;
         default:
             break;
     }
 
     if (engineState.isPlayer1Turn) {
-        engineState.player1.drawEnemyBoard();
+        engineState.player1.drawEnemyBoard(false);
     } else {
-        engineState.player2.drawEnemyBoard();
+        engineState.player2.drawEnemyBoard(false);
+    }
+
+    if (hit) {
+        {
+            
+        }
+    } else {
+        Clock_Delay1ms(1000);
     }
 }
 
 void initActiveGame() {
     engineState.isPlayer1Turn = true;
-    engineState.player1.drawEnemyBoard();
+    engineState.player1.drawEnemyBoard(true);
     isMyBoard = false;
 }
 
@@ -151,7 +163,7 @@ enum GameState handleActiveGame(enum Event event) {
             if (isMyBoard) {
                 current_player->drawMyBoard();
             } else {
-                current_player->drawEnemyBoard();
+                current_player->drawEnemyBoard(true);
             }
             return ACTIVE_GAME;
         
@@ -159,6 +171,9 @@ enum GameState handleActiveGame(enum Event event) {
             if (isMyBoard) return ACTIVE_GAME;
             if (!isValidMove()) return ACTIVE_GAME;
             registerHit();
+            engineState.switchPlayer();
+            return ACTIVE_GAME;
+        
         default:
             return ACTIVE_GAME;
     }

@@ -25,4 +25,8 @@ extern const uint16_t miss_marker[];
 extern const uint16_t hit_marker[];
 extern const uint16_t cursor_marker[];
 
+extern const uint16_t explosion1[];
+extern const uint16_t explosion2[];
+extern const uint16_t explosion3[];
+
 #endif /* __images_h */
