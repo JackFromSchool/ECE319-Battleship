@@ -94,9 +94,13 @@ enum GameState handleBoardPlacement(enum Event event)
     {
         return BOARD_PLACEMENT;
     }
-    if(engineState.player1.numShipsPlaced == 5 && engineState.player2.numShipsPlaced == 5)
+    if(engineState.player1.numShipsPlaced == 5 && engineState.isPlayer1Turn)
     {
         updateBoard(&engineState.player1);
+        engineState.isPlayer1Turn = false;
+    }
+    if(engineState.player2.numShipsPlaced == 5 && !(engineState.isPlayer1Turn))
+    {
         updateBoard(&engineState.player2);
         return ACTIVE_GAME;
     }

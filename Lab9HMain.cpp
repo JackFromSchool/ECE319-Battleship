@@ -360,10 +360,6 @@ int main(void){ // final main
   __enable_irq();
 
   engineState.eventQueue.emptyContents();
-<<<<<<< HEAD
-  engineState.gamestate = BOARD_PLACEMENT;
-  initBoardPlacement();
-=======
   engineState.gamestate = ACTIVE_GAME;
   
   engineState.player2.mine.board[0][0] = TWO_SHIP0;
@@ -388,7 +384,6 @@ int main(void){ // final main
   engineState.player2.mine.board[4][4] = FIVE_SHIP;
   
   initActiveGame();
->>>>>>> d4a9fcf20decb13213fbb2b3bf4c537b0696a5a3
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;
