@@ -5,6 +5,8 @@
 #include "../inc/Clock.h"
 #include "../inc/ST7735.h"
 #include "images/ImageTools.h"
+#include "sounds/sounds.h"
+#include "Sound.h"
 
 static bool isMyBoard;
 
@@ -61,7 +63,8 @@ static void tryMoveCursor(enum Event event) {
     }
     c->x_pos = newCursor.x_pos;
     c->y_pos = newCursor.y_pos;
-    
+
+    Sound_Start(tick, TICK_LEN);
     if (engineState.isPlayer1Turn) {
         engineState.player1.drawEnemyBoard(true);
     } else {
@@ -143,7 +146,7 @@ bool registerHit() {
     }
 
     if (hit) {
-        
+        Sound_Start(kaboom, KABOOM_LEN);
         Clock_Delay1ms(250);
         {   
             Sprite sp = Sprite(explosion1, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
@@ -195,6 +198,7 @@ bool registerHit() {
         }
         Clock_Delay1ms(250);
     } else {
+        Sound_Start(kersplash, KERSPLASH_LEN);
         Clock_Delay1ms(2000);
     }
 
@@ -224,6 +228,7 @@ enum GameState handleActiveGame(enum Event event) {
             return ACTIVE_GAME;
 
         case BUTTON1_PRESS:
+            Sound_Start(select, SELECT_LEN);
             isMyBoard = !isMyBoard;
             if (isMyBoard) {
                 current_player->drawMyBoard();
@@ -239,6 +244,13 @@ enum GameState handleActiveGame(enum Event event) {
                 return END_SCREEN;
             }
             engineState.switchPlayer();
+            
+            if (engineState.isPlayer1Turn) {
+                current_player = &engineState.player1;
+            } else {
+                current_player = &engineState.player2;
+            }
+            current_player->drawEnemyBoard(true);
             return ACTIVE_GAME;
     
         default:

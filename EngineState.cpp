@@ -6,6 +6,8 @@
 #include "../inc/ST7735.h"
 #include "../inc/Clock.h"
 #include "Globals.h"
+#include "sounds/sounds.h"
+#include "Sound.h"
 
 // Engine ====================================================
 
@@ -44,16 +46,22 @@ void Engine::switchPlayer() {
             printText("TURNO DEL JUGADOR 2", 12, 12, MENU_BG, MENU_TEXT);
         }
     }
+    Sound_Start(tick, TICK_LEN);
     printText("5", 64, 73, MENU_BG, MENU_TEXT);
     Clock_Delay1ms(1000);
+    Sound_Start(tick, TICK_LEN);
     printText("4", 64, 73, MENU_BG, MENU_TEXT);
     Clock_Delay1ms(1000);
+    Sound_Start(tick, TICK_LEN);
     printText("3", 64, 73, MENU_BG, MENU_TEXT);
     Clock_Delay1ms(1000);
+    Sound_Start(tick, TICK_LEN);
     printText("2", 64, 73, MENU_BG, MENU_TEXT);
     Clock_Delay1ms(1000);
+    Sound_Start(tick, TICK_LEN);
     printText("1", 64, 73, MENU_BG, MENU_TEXT);
     Clock_Delay1ms(1000);
+    Sound_Start(select, SELECT_LEN);
 }
 
 // Player ====================================================

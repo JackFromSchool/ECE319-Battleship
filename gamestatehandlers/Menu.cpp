@@ -2,10 +2,13 @@
 #include "EngineState.h"
 #include "Events.h"
 #include "Globals.h"
+#include "Sound.h"
 #include "images/images.h"
 #include "images/ImageTools.h"
 #include "images/FontPrint.h"
 #include "../inc/ST7735.h"
+#include "sounds/sounds.h"
+#include "Sound.h"
 
 enum Screen {
     MAIN_MENU,
@@ -93,10 +96,12 @@ enum GameState handleMenu(enum Event event) {
                     engineState.language = ENGLISH;
                 }
                 printMain();
+                Sound_Start(tick, TICK_LEN);
                 break;
             
             case BUTTON3_PRESS:
                 current_screen = OPTIONS_MENU;
+                Sound_Start(select, SELECT_LEN);
                 printOptions();
 
             default: break;
@@ -106,6 +111,7 @@ enum GameState handleMenu(enum Event event) {
             case BUTTON0_PRESS:
                 engineState.audio = !engineState.audio;
                 printOptions();
+                Sound_Start(tick, TICK_LEN);
                 break;
             
             case BUTTON2_PRESS:
@@ -115,11 +121,13 @@ enum GameState handleMenu(enum Event event) {
                     engineState.playmode = SINGLE_BOARD;
                 }
                 printOptions();
+                Sound_Start(tick, TICK_LEN);
                 break;
             
             case BUTTON3_PRESS:
                 engineState.isPlayer1Turn = false;
                 engineState.switchPlayer();
+                Sound_Start(select, SELECT_LEN);
                 return BOARD_PLACEMENT;
                 break;
             

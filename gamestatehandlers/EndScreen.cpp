@@ -6,6 +6,8 @@
 #include "images/ImageTools.h"
 #include "images/FontPrint.h"
 #include "../inc/ST7735.h"
+#include "sounds/sounds.h"
+#include "Sound.h"
 
 void printEnd() {
     ST7735_FillScreen(MENU_TEXT);
@@ -55,6 +57,8 @@ void printEnd() {
         printText("PRESIONE SW4 PARA", 12, 135, MENU_BG, MENU_TEXT);
         printText("CONTINUAR", 12, 143, MENU_BG, MENU_TEXT);
     }
+
+    Sound_Start(yippee, YIPPEE_LEN);
 }
 
 void initEndScreen() {
@@ -66,6 +70,7 @@ enum GameState handleEndScreen(enum Event event) {
         case BUTTON3_PRESS:
             return MENU;
         default:
+            Sound_Start(yippee, YIPPEE_LEN);
             break;
     }
     return END_SCREEN;

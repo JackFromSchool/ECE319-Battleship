@@ -312,7 +312,7 @@ int main3(void){ // main3
   }
 }
 // use main4 to test sound outputs
-int main(void){
+int main4(void){
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
@@ -346,7 +346,7 @@ int main(void){
 
 }
 // ALL ST7735 OUTPUT MUST OCCUR IN MAIN
-int main5(void){ // final main
+int main(void){ // final main
   __disable_irq();
   PLL_Init();
   LaunchPad_Init();
@@ -360,8 +360,8 @@ int main5(void){ // final main
   __enable_irq();
 
   engineState.eventQueue.emptyContents();
-  engineState.gamestate = MENU;
-  /*
+  engineState.gamestate = ACTIVE_GAME;
+  
   engineState.player2.mine.board[0][0] = TWO_SHIP0;
   engineState.player2.mine.board[0][1] = TWO_SHIP0;
   
@@ -382,8 +382,8 @@ int main5(void){ // final main
   engineState.player2.mine.board[4][2] = FIVE_SHIP;
   engineState.player2.mine.board[4][3] = FIVE_SHIP;
   engineState.player2.mine.board[4][4] = FIVE_SHIP;
-  */
-  initMenu();
+  
+  initActiveGame();
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;
