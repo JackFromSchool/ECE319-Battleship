@@ -4,78 +4,80 @@
 #include "Globals.h"
 #include "images/images.h"
 #include <cstddef>
+#include "sounds/sounds.h"
+#include "Sound.h"
 
 void updateBoard(Player * player)
 {
-    for(int i = 0; i < 10; i++)
+    for(int y = 0; y < 10; y++)
     {
-        for(int j = 0; j < 10; j++)
+        for(int x = 0; x < 10; x++)
         {
-            if(i == player->two_ship0.board_pos_x && j == player->two_ship0.board_pos_y)
+            if(x == player->two_ship0.board_pos_x && y == player->two_ship0.board_pos_y)
             {
-                player->mine.board[i][j] = TWO_SHIP0;
+                player->mine.board[y][x] = TWO_SHIP0;
                 if(player->two_ship0.rotated)
                 {
-                    player->mine.board[i][j + 1] = TWO_SHIP0;
+                    player->mine.board[y][x + 1] = TWO_SHIP0;
                 }
                 else {
-                    player->mine.board[i - 1][j] = TWO_SHIP0;
+                    player->mine.board[y - 1][x] = TWO_SHIP0;
                 }
             }
-            else if (i == player->two_ship1.board_pos_x && j == player->two_ship1.board_pos_y){
-                player->mine.board[i][j] = TWO_SHIP1;
+            else if (x == player->two_ship1.board_pos_x && y == player->two_ship1.board_pos_y){
+                player->mine.board[y][x] = TWO_SHIP1;
                 if(player->two_ship1.rotated)
                 {
-                    player->mine.board[i][j + 1] = TWO_SHIP1;
+                    player->mine.board[y][x + 1] = TWO_SHIP1;
                 }
                 else {
-                    player->mine.board[i - 1][j] = TWO_SHIP1;
+                    player->mine.board[y - 1][x] = TWO_SHIP1;
                 }
             }
-            else if (i == player->three_ship.board_pos_x && j == player->three_ship.board_pos_y){
-                player->mine.board[i][j] = THREE_SHIP;
+            else if (x == player->three_ship.board_pos_x && y == player->three_ship.board_pos_y){
+                player->mine.board[y][x] = THREE_SHIP;
                 if(player->three_ship.rotated)
                 {
-                    player->mine.board[i][j + 1] = THREE_SHIP;
-                    player->mine.board[i][j + 2] = THREE_SHIP;
+                    player->mine.board[y][x + 1] = THREE_SHIP;
+                    player->mine.board[y][x + 2] = THREE_SHIP;
                 }
                 else {
-                    player->mine.board[i - 1][j] = THREE_SHIP;
-                    player->mine.board[j - 2][j] = THREE_SHIP;
+                    player->mine.board[y - 1][x] = THREE_SHIP;
+                    player->mine.board[y - 2][x] = THREE_SHIP;
                 }
             }
-            else if (i == player->four_ship.board_pos_x && j == player->four_ship.board_pos_y){
-                player->mine.board[i][j] = FOUR_SHIP;
+            else if (x == player->four_ship.board_pos_x && y == player->four_ship.board_pos_y){
+                player->mine.board[y][x] = FOUR_SHIP;
                 if(player->four_ship.rotated)
                 {
-                    player->mine.board[i][j + 1] = FOUR_SHIP;
-                    player->mine.board[i][j + 2] = FOUR_SHIP;
-                    player->mine.board[i][j + 3] = FOUR_SHIP;
+                    player->mine.board[y][x + 1] = FOUR_SHIP;
+                    player->mine.board[y][x + 2] = FOUR_SHIP;
+                    player->mine.board[y][x + 3] = FOUR_SHIP;
                 }
                 else {
-                    player->mine.board[i - 1][j] = FOUR_SHIP;
-                    player->mine.board[i - 2][j] = FOUR_SHIP;
-                    player->mine.board[i - 3][j] = FOUR_SHIP;
+                    player->mine.board[y - 1][x] = FOUR_SHIP;
+                    player->mine.board[y - 2][x] = FOUR_SHIP;
+                    player->mine.board[y - 3][x] = FOUR_SHIP;
                 }
             }
-            else if (i == player->five_ship.board_pos_x && j == player->five_ship.board_pos_y){
-                player->mine.board[i][j] = FIVE_SHIP;
+            else if (x == player->five_ship.board_pos_x && y == player->five_ship.board_pos_y){
+                player->mine.board[y][x] = FIVE_SHIP;
                 if(player->five_ship.rotated)
                 {
-                    player->mine.board[i][j + 1] = FIVE_SHIP;
-                    player->mine.board[i][j + 2] = FIVE_SHIP;
-                    player->mine.board[i][j + 3] = FIVE_SHIP;
-                    player->mine.board[i][j + 4] = FIVE_SHIP;
+                    player->mine.board[y][x + 1] = FIVE_SHIP;
+                    player->mine.board[y][x + 2] = FIVE_SHIP;
+                    player->mine.board[y][x + 3] = FIVE_SHIP;
+                    player->mine.board[y][x + 4] = FIVE_SHIP;
                 }
                 else {
-                    player->mine.board[i - 1][j] = FIVE_SHIP;
-                    player->mine.board[i - 2][j] = FIVE_SHIP;
-                    player->mine.board[i - 3][j] = FIVE_SHIP;
-                    player->mine.board[i - 4][j] = FIVE_SHIP;
+                    player->mine.board[y - 1][x] = FIVE_SHIP;
+                    player->mine.board[y - 2][x] = FIVE_SHIP;
+                    player->mine.board[y - 3][x] = FIVE_SHIP;
+                    player->mine.board[y - 4][x] = FIVE_SHIP;
                 }
             }
             else {
-                player->mine.board[i][j] = WATER;
+                player->mine.board[y][x] = WATER;
             }
         }
     }
@@ -97,11 +99,12 @@ enum GameState handleBoardPlacement(enum Event event)
     if(engineState.player1.numShipsPlaced == 5 && engineState.isPlayer1Turn)
     {
         updateBoard(&engineState.player1);
-        engineState.isPlayer1Turn = false;
+        engineState.switchPlayer();
     }
     if(engineState.player2.numShipsPlaced == 5 && !(engineState.isPlayer1Turn))
     {
         updateBoard(&engineState.player2);
+        engineState.switchPlayer();
         return ACTIVE_GAME;
     }
     if(engineState.isPlayer1Turn)
@@ -140,6 +143,7 @@ enum GameState handleBoardPlacement(enum Event event)
             {
                 currShip->set_y(currShip->board_pos_y + 1);
             }
+            Sound_Start(tick, TICK_LEN);
             break;
         case JOYSTICK_UP:
             //Get the object for Player 1, move the head of the ship in the specified direction
@@ -152,6 +156,7 @@ enum GameState handleBoardPlacement(enum Event event)
             {
                 currShip->set_y(currShip->board_pos_y - 1);
             }
+            Sound_Start(tick, TICK_LEN);
             break;
         case JOYSTICK_LEFT:
             //Get the object for Player 1, move the head of the ship in the specified direction
@@ -160,6 +165,7 @@ enum GameState handleBoardPlacement(enum Event event)
             {
                 currShip->set_x(currShip->board_pos_x - 1);
             }
+            Sound_Start(tick, TICK_LEN);
             break;
         case JOYSTICK_RIGHT:
             //Get the object for Player 1, move the head of the ship in the specified direction
@@ -171,6 +177,7 @@ enum GameState handleBoardPlacement(enum Event event)
             else if(currShip->board_pos_x + 1 <= 9) {
                 currShip->set_x(currShip->board_pos_x + 1);
             }
+            Sound_Start(tick, TICK_LEN);
             break;
         case BUTTON3_PRESS:
             tempPlayer->numShipsPlaced++;
