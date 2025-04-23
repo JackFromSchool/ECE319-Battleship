@@ -60,7 +60,7 @@ class Ship {
         uint8_t ship_size;
         uint8_t num_hits;
         bool sunk;
-        bool isPlaced;
+        bool isVisible;
         Ship(Sprite sprite, uint8_t ship_size);
         void set_x(uint8_t new_x);
         void set_y(uint8_t new_y);

@@ -229,7 +229,7 @@ int main2(void){ // main2
   }
 }
 
-// use main3 to test switches and LEDs
+// use main3 to test switches, LEDs joystick, and slidepot
 int main3(void){ // main3
   __disable_irq();
   PLL_Init(); // set bus speed
@@ -344,8 +344,8 @@ int main(void){ // final main
   __enable_irq();
 
   engineState.eventQueue.emptyContents();
-  engineState.gamestate = ACTIVE_GAME;
-  initActiveGame();
+  engineState.gamestate = BOARD_PLACEMENT;
+  initBoardPlacement();
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;

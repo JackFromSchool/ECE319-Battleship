@@ -51,31 +51,31 @@ void Player::drawMyBoard() {
     // Redraw Background
     ST7735_DrawBitmap(0, 160, battleship_board, 128, 160);
 
-    if (this->two_ship0.isPlaced) {
+    if (this->two_ship0.isVisible) {
         uint16_t temp[this->two_ship0.sprite.size()];
         this->two_ship0.sprite.fill_background(battleship_board, temp);
         DRAWSPRITE(this->two_ship0.sprite, temp);
     }
 
-    if (this->two_ship1.isPlaced) {
+    if (this->two_ship1.isVisible) {
         uint16_t temp[this->two_ship1.sprite.size()];
         this->two_ship1.sprite.fill_background(battleship_board, temp);
         DRAWSPRITE(this->two_ship1.sprite, temp);
     }
 
-    if (this->three_ship.isPlaced) {
+    if (this->three_ship.isVisible) {
         uint16_t temp[this->three_ship.sprite.size()];
         this->three_ship.sprite.fill_background(battleship_board, temp);
         DRAWSPRITE(this->three_ship.sprite, temp);
     }
 
-    if (this->four_ship.isPlaced) {
+    if (this->four_ship.isVisible) {
         uint16_t temp[this->four_ship.sprite.size()];
         this->four_ship.sprite.fill_background(battleship_board, temp);
         DRAWSPRITE(this->four_ship.sprite, temp);
     }
 
-    if (this->five_ship.isPlaced) {
+    if (this->five_ship.isVisible) {
         uint16_t temp[this->five_ship.sprite.size()];
         this->five_ship.sprite.fill_background(battleship_board, temp);
         DRAWSPRITE(this->five_ship.sprite, temp);
@@ -164,7 +164,7 @@ Ship::Ship(Sprite sprite, uint8_t ship_size) : sprite(sprite) {
     this->num_hits = 0;
     this->rotated = false;
     this->sunk = false;
-    this->isPlaced = false;
+    this->isVisible = false;
 }
 
 void Ship::set_x(uint8_t new_x) {
