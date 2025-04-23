@@ -9,37 +9,25 @@
 
 bool isCollision(Player * player, Ship * ship)
 {
-    int counter = 0;
-    if(ship->rotated)
-    {
-        while(counter < ship->ship_size)
-        {
-            if(player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == TWO_SHIP0 || 
-            player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == TWO_SHIP1 ||
-            player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == THREE_SHIP ||
-            player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == FOUR_SHIP ||
-            player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == FIVE_SHIP)
-            {
+    if (ship->rotated) {
+        for (int i = 0; i < ship->ship_size; i++) {
+            if (player->mine.board[ship->board_pos_y][ship->board_pos_x + i] == TWO_SHIP0 || 
+            player->mine.board[ship->board_pos_y][ship->board_pos_x + i] == TWO_SHIP1 || 
+            player->mine.board[ship->board_pos_y][ship->board_pos_x + i] == THREE_SHIP || 
+            player->mine.board[ship->board_pos_y][ship->board_pos_x + i] == FOUR_SHIP || 
+            player->mine.board[ship->board_pos_y][ship->board_pos_x + i] == FIVE_SHIP )
                 return true;
-            }
-            counter++;
         }
-    }
-    else {
-        while(counter < ship->ship_size)
-        {
-            if(player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == TWO_SHIP0 || 
-            player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == TWO_SHIP1 ||
-            player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == THREE_SHIP ||
-            player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == FOUR_SHIP ||
-            player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == FIVE_SHIP)
-            {
-                return true;
-            }
-            counter++;
+    } else {
+        for (int i = 0; i < ship->ship_size; i++) {
+                if (player->mine.board[ship->board_pos_y - i][ship->board_pos_x] == TWO_SHIP0 || 
+                player->mine.board[ship->board_pos_y - i][ship->board_pos_x] == TWO_SHIP1 || 
+                player->mine.board[ship->board_pos_y - i][ship->board_pos_x] == THREE_SHIP || 
+                player->mine.board[ship->board_pos_y - i][ship->board_pos_x] == FOUR_SHIP || 
+                player->mine.board[ship->board_pos_y - i][ship->board_pos_x] == FIVE_SHIP )
+                    return true;
+             }
         }
-        
-    }
     return false;
 }
 
@@ -204,11 +192,11 @@ enum GameState handleBoardPlacement(enum Event event)
         case JOYSTICK_RIGHT:
             //Get the object for Player 1, move the head of the ship in the specified direction
             currShip->isVisible = true;
-            if((currShip->board_pos_x + currShip->ship_size - 1) <= 9 && currShip->rotated)
+            if((currShip->board_pos_x + currShip->ship_size) <= 9 && currShip->rotated)
             {
                 currShip->set_x(currShip->board_pos_x + 1);
             }
-            else if(currShip->board_pos_x + 1 <= 9) {
+            else if(currShip->board_pos_x + 1 <= 9 && !currShip->rotated) {
                 currShip->set_x(currShip->board_pos_x + 1);
             }
             Sound_Start(tick, TICK_LEN);
@@ -225,55 +213,55 @@ enum GameState handleBoardPlacement(enum Event event)
             {
                 case 0:
                     tempPlayer->two_ship0.isVisible = true;
-                    if(tempPlayer->two_ship0.rotated)
+                    if(tempPlayer->two_ship0.rotated && (tempPlayer->two_ship0.board_pos_y > 0))
                     {
                         tempPlayer->two_ship0.sprite = Sprite(two_space_battleship1, BOARDSPACEX(tempPlayer->two_ship0.board_pos_x), BOARDSPACEY(tempPlayer->two_ship0.board_pos_y), 11, 22);
                         tempPlayer->two_ship0.rotated = false;
-                    } else {
+                    } else if (!tempPlayer->two_ship0.rotated && tempPlayer->two_ship0.board_pos_x + 1 < 10) {
                         tempPlayer->two_ship0.sprite = Sprite(two_space_battleship190, BOARDSPACEX(tempPlayer->two_ship0.board_pos_x), BOARDSPACEY(tempPlayer->two_ship0.board_pos_y), 22, 11);
                         tempPlayer->two_ship0.rotated = true;
                     }
                     break;
                 case 1:
                     tempPlayer->two_ship1.isVisible = true;
-                    if(tempPlayer->two_ship1.rotated)
+                    if(tempPlayer->two_ship1.rotated  && (tempPlayer->two_ship1.board_pos_y > 0))
                     {
                         tempPlayer->two_ship1.sprite = Sprite(two_space_battleship2, BOARDSPACEX(tempPlayer->two_ship1.board_pos_x), BOARDSPACEY(tempPlayer->two_ship1.board_pos_y), 11, 22);
                         tempPlayer->two_ship1.rotated = false;
-                    } else {
+                    } else if (!tempPlayer->two_ship1.rotated && tempPlayer->two_ship1.board_pos_x + 1 < 10) {
                         tempPlayer->two_ship1.sprite = Sprite(two_space_battleship290, BOARDSPACEX(tempPlayer->two_ship1.board_pos_x), BOARDSPACEY(tempPlayer->two_ship1.board_pos_y), 22, 11);
                         tempPlayer->two_ship1.rotated = true;
                     }
                     break;
                 case 2:
                     tempPlayer->three_ship.isVisible = true;
-                    if(tempPlayer->three_ship.rotated)
+                    if(tempPlayer->three_ship.rotated && (tempPlayer->three_ship.board_pos_y - 1 > 0))
                     {
                         tempPlayer->three_ship.sprite = Sprite(three_space_battleship, BOARDSPACEX(tempPlayer->three_ship.board_pos_x), BOARDSPACEY(tempPlayer->three_ship.board_pos_y), 11, 33);
                         tempPlayer->three_ship.rotated = false;
-                    } else {
+                    } else if (!tempPlayer->three_ship.rotated && (tempPlayer->three_ship.board_pos_x + 2 < 10)) {
                         tempPlayer->three_ship.sprite = Sprite(three_space_battleship90, BOARDSPACEX(tempPlayer->three_ship.board_pos_x), BOARDSPACEY(tempPlayer->three_ship.board_pos_y), 33, 11);
                         tempPlayer->three_ship.rotated = true;
                     }
                     break;
                 case 3:
                     tempPlayer->four_ship.isVisible = true;
-                    if(tempPlayer->four_ship.rotated)
+                    if(tempPlayer->four_ship.rotated && (tempPlayer->four_ship.board_pos_y - 2 > 0))
                     {
                         tempPlayer->four_ship.sprite = Sprite(four_space_battleship, BOARDSPACEX(tempPlayer->four_ship.board_pos_x), BOARDSPACEY(tempPlayer->four_ship.board_pos_y), 11, 44);
                         tempPlayer->four_ship.rotated = false;
-                    } else {
+                    } else if (!tempPlayer->four_ship.rotated && (tempPlayer->four_ship.board_pos_x + 3 < 10)){
                         tempPlayer->four_ship.sprite = Sprite(four_space_battleship90, BOARDSPACEX(tempPlayer->four_ship.board_pos_x), BOARDSPACEY(tempPlayer->four_ship.board_pos_y), 44, 11);
                         tempPlayer->four_ship.rotated = true;
                     }
                     break;
                 case 4:
                     tempPlayer->five_ship.isVisible = true;
-                    if(tempPlayer->five_ship.rotated)
+                    if(tempPlayer->five_ship.rotated && (tempPlayer->five_ship.board_pos_y - 3 > 0))
                     {
                         tempPlayer->five_ship.sprite = Sprite(five_space_battleship, BOARDSPACEX(tempPlayer->five_ship.board_pos_x), BOARDSPACEY(tempPlayer->five_ship.board_pos_y), 11, 55);
                         tempPlayer->five_ship.rotated = false;
-                    } else {
+                    } else if (!tempPlayer->five_ship.rotated && (tempPlayer->five_ship.board_pos_x + 4 < 10)){
                         tempPlayer->five_ship.sprite = Sprite(five_space_battleship90, BOARDSPACEX(tempPlayer->five_ship.board_pos_x), BOARDSPACEY(tempPlayer->five_ship.board_pos_y), 55, 11);
                         tempPlayer->five_ship.rotated = true;
                     }
