@@ -23,6 +23,7 @@
 #include "images/ImageTools.h"
 #include "images/images.h"
 #include "images/FontPrint.h"
+#include "sounds/sounds.h"
 #include "eventhandlers/JoystickSlidePotHandler.h"
 #include "eventhandlers/ButtonHandler.h"
 #include "gamestatehandlers/Menu.h"
@@ -216,14 +217,19 @@ int main2(void){ // main2
   }
   */
 
-  /*
+  engineState.language = SPANISH;
   engineState.player1.mine.board[0][0] = HIT;
   engineState.player1.mine.board[1][0] = HIT;
   engineState.player1.mine.board[1][1] = MISS;
   engineState.player1.drawMyBoard();
-  */
+  
 
-  printText("HI", 0, 7, 0xFFFF, 0x3333);
+  /*
+  printText("YOUR SHIPS", 0, 7, 0xFFFF, 0x0000);
+  printText("SUNK SHIPS", 0, 15, 0xFFFF, 0x0000);
+  printText("ABILITY", 0, 23, 0xFFFF, 0x0000);
+  printText("UVWXYZ", 0, 31, 0xFFFF, 0x0000);
+  */
 
   while(1){
   }
@@ -306,28 +312,38 @@ int main3(void){ // main3
   }
 }
 // use main4 to test sound outputs
-int main4(void){ uint32_t last=0,now;
+int main4(void){
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
+  buttonHandlerInit();
+  //joystickSlidePotHandlerInit();
+  //TExaS_Init(ADC0,6,0);
   Sound_Init();  // initialize sound
-  TExaS_Init(ADC0,6,0); // ADC1 channel 6 is PB20, TExaS scope
   __enable_irq();
+  
+  
+  engineState.eventQueue.emptyContents();
   while(1){
-    if((last == 0)&&(now == 1)){
-      Sound_Shoot(); // call one of your sounds
+    enum Event event = engineState.pollQueue();
+    switch (event) {
+      case BUTTON0_PRESS:
+        Sound_Start(kersplash, KERSPLASH_LEN);
+        break;
+      case BUTTON1_PRESS:
+        Sound_Start(kaboom, KABOOM_LEN);
+        break;
+      case BUTTON2_PRESS:
+        Sound_Start(yippee, YIPPEE_LEN);
+        break;
+      case BUTTON3_PRESS:
+        Sound_Start(select, SELECT_LEN);
+        break;
+      default:
+        break;
     }
-    if((last == 0)&&(now == 2)){
-      Sound_Killed(); // call one of your sounds
-    }
-    if((last == 0)&&(now == 4)){
-      Sound_Explosion(); // call one of your sounds
-    }
-    if((last == 0)&&(now == 8)){
-      Sound_Fastinvader1(); // call one of your sounds
-    }
-    // modify this to test all your sounds
   }
+
 }
 // ALL ST7735 OUTPUT MUST OCCUR IN MAIN
 int main(void){ // final main
@@ -344,8 +360,35 @@ int main(void){ // final main
   __enable_irq();
 
   engineState.eventQueue.emptyContents();
+<<<<<<< HEAD
   engineState.gamestate = BOARD_PLACEMENT;
   initBoardPlacement();
+=======
+  engineState.gamestate = ACTIVE_GAME;
+  
+  engineState.player2.mine.board[0][0] = TWO_SHIP0;
+  engineState.player2.mine.board[0][1] = TWO_SHIP0;
+  
+  engineState.player2.mine.board[1][0] = TWO_SHIP1;
+  engineState.player2.mine.board[1][1] = TWO_SHIP1;
+
+  engineState.player2.mine.board[2][0] = THREE_SHIP;
+  engineState.player2.mine.board[2][1] = THREE_SHIP;
+  engineState.player2.mine.board[2][2] = THREE_SHIP;
+
+  engineState.player2.mine.board[3][0] = FOUR_SHIP;
+  engineState.player2.mine.board[3][1] = FOUR_SHIP;
+  engineState.player2.mine.board[3][2] = FOUR_SHIP;
+  engineState.player2.mine.board[3][3] = FOUR_SHIP;
+
+  engineState.player2.mine.board[4][0] = FIVE_SHIP;
+  engineState.player2.mine.board[4][1] = FIVE_SHIP;
+  engineState.player2.mine.board[4][2] = FIVE_SHIP;
+  engineState.player2.mine.board[4][3] = FIVE_SHIP;
+  engineState.player2.mine.board[4][4] = FIVE_SHIP;
+  
+  initActiveGame();
+>>>>>>> d4a9fcf20decb13213fbb2b3bf4c537b0696a5a3
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;

@@ -1,0 +1,3 @@
+const unsigned short text_palete[] = {
+ 0x38B7, 0x0061, 0x53E3, 0x0903,
+};

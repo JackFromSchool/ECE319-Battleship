@@ -64,6 +64,7 @@ class Ship {
         Ship(Sprite sprite, uint8_t ship_size);
         void set_x(uint8_t new_x);
         void set_y(uint8_t new_y);
+        bool hit();
 };
 
 class Cursor {
@@ -79,6 +80,9 @@ class Player {
         Board mine;
         uint8_t numShipsPlaced;
         Cursor cursor;
+        uint8_t alive_ships;
+        uint8_t sunk_ships;
+        uint8_t score;
         Ship two_ship0;
         Ship two_ship1;
         Ship three_ship;
@@ -87,6 +91,7 @@ class Player {
         Player();
         void drawMyBoard();
         void drawEnemyBoard(bool cursor);
+        bool hasLost();
 };
 
 /*
