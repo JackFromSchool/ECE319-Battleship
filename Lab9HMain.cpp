@@ -312,7 +312,7 @@ int main3(void){ // main3
   }
 }
 // use main4 to test sound outputs
-int main4(void){ uint32_t last=0,now;
+int main(void){
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
@@ -321,7 +321,8 @@ int main4(void){ uint32_t last=0,now;
   //TExaS_Init(ADC0,6,0);
   Sound_Init();  // initialize sound
   __enable_irq();
-
+  
+  
   engineState.eventQueue.emptyContents();
   while(1){
     enum Event event = engineState.pollQueue();
@@ -342,9 +343,10 @@ int main4(void){ uint32_t last=0,now;
         break;
     }
   }
+
 }
 // ALL ST7735 OUTPUT MUST OCCUR IN MAIN
-int main(void){ // final main
+int main5(void){ // final main
   __disable_irq();
   PLL_Init();
   LaunchPad_Init();

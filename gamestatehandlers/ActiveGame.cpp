@@ -125,6 +125,7 @@ bool registerHit() {
             *enemy_space = MISS;
             *my_space = MISS;
             hit = false;
+            current_player->score--;
             break;
         default:
             break;

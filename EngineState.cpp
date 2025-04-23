@@ -67,6 +67,7 @@ Player::Player() : two_ship0(Sprite(two_space_battleship1, BOARDSPACEX(5), BOARD
     this->numShipsPlaced = 0;
     this->alive_ships = 5;
     this->sunk_ships = 0;
+    this->score = 100;
     this->enemy = Board();
     this->mine = Board();
     this->cursor = Cursor();
