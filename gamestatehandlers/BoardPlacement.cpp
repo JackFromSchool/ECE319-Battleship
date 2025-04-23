@@ -7,6 +7,42 @@
 #include "sounds/sounds.h"
 #include "Sound.h"
 
+bool isCollision(Player * player, Ship * ship)
+{
+    int counter = 0;
+    if(ship->rotated)
+    {
+        while(counter < ship->ship_size)
+        {
+            if(player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == TWO_SHIP0 || 
+            player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == TWO_SHIP1 ||
+            player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == THREE_SHIP ||
+            player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == FOUR_SHIP ||
+            player->mine.board[ship->board_pos_y][ship->board_pos_x + counter] == FIVE_SHIP)
+            {
+                return true;
+            }
+            counter++;
+        }
+    }
+    else {
+        while(counter < ship->ship_size)
+        {
+            if(player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == TWO_SHIP0 || 
+            player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == TWO_SHIP1 ||
+            player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == THREE_SHIP ||
+            player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == FOUR_SHIP ||
+            player->mine.board[ship->board_pos_y - counter][ship->board_pos_x] == FIVE_SHIP)
+            {
+                return true;
+            }
+            counter++;
+        }
+        
+    }
+    return false;
+}
+
 void updateBoard(Player * player)
 {
     for(int y = 0; y < 10; y++)
@@ -98,12 +134,10 @@ enum GameState handleBoardPlacement(enum Event event)
     }
     if(engineState.player1.numShipsPlaced == 5 && engineState.isPlayer1Turn)
     {
-        updateBoard(&engineState.player1);
         engineState.switchPlayer();
     }
     if(engineState.player2.numShipsPlaced == 5 && !(engineState.isPlayer1Turn))
     {
-        updateBoard(&engineState.player2);
         engineState.switchPlayer();
         return ACTIVE_GAME;
     }
@@ -180,7 +214,11 @@ enum GameState handleBoardPlacement(enum Event event)
             Sound_Start(tick, TICK_LEN);
             break;
         case BUTTON3_PRESS:
-            tempPlayer->numShipsPlaced++;
+            if(!(isCollision(tempPlayer, currShip)))
+            {
+                tempPlayer->numShipsPlaced++;
+                updateBoard(tempPlayer);
+            }
             break;
         case BUTTON1_PRESS:
             switch(tempPlayer->numShipsPlaced)
