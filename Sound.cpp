@@ -9,6 +9,7 @@
 #include "LaunchPad.h"
 #include "Sound.h"
 #include "../inc/DAC5.h"
+#include "Globals.h"
 
 class SoundState {
   public:
@@ -36,6 +37,7 @@ void Sound_Init() {
 }
 
 void Sound_Start(const uint8_t *pt, uint32_t count) {
+  if (!engineState.audio) return;
   if (state.current_sound != NULL) return;
   state.current_sound = pt;
   state.end = count;

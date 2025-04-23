@@ -235,7 +235,7 @@ int main2(void){ // main2
   }
 }
 
-// use main3 to test switches, LEDs joystick, and slidepot
+// use main3 to test switches and LEDs
 int main3(void){ // main3
   __disable_irq();
   PLL_Init(); // set bus speed
@@ -360,12 +360,8 @@ int main(void){ // final main
   __enable_irq();
 
   engineState.eventQueue.emptyContents();
-<<<<<<< HEAD
-  engineState.gamestate = BOARD_PLACEMENT;
-  initBoardPlacement();
-=======
-  engineState.gamestate = ACTIVE_GAME;
-  
+  engineState.gamestate = MENU;
+  /*
   engineState.player2.mine.board[0][0] = TWO_SHIP0;
   engineState.player2.mine.board[0][1] = TWO_SHIP0;
   
@@ -386,9 +382,8 @@ int main(void){ // final main
   engineState.player2.mine.board[4][2] = FIVE_SHIP;
   engineState.player2.mine.board[4][3] = FIVE_SHIP;
   engineState.player2.mine.board[4][4] = FIVE_SHIP;
-  
-  initActiveGame();
->>>>>>> d4a9fcf20decb13213fbb2b3bf4c537b0696a5a3
+  */
+  initMenu();
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;
