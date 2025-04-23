@@ -82,7 +82,7 @@ class Player {
         Cursor cursor;
         uint8_t alive_ships;
         uint8_t sunk_ships;
-        uint8_t score;
+        uint32_t score;
         Ship two_ship0;
         Ship two_ship1;
         Ship three_ship;
