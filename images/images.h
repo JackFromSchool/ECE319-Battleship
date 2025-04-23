@@ -9,6 +9,8 @@
 
 #define BOARD_BG 0x38B7
 #define BOARD_TEXT 0x0061
+#define MENU_BG 0x53E3
+#define MENU_TEXT 0x0903
 extern const uint16_t battleship_board[];
 
 extern const uint16_t two_space_battleship1[];
@@ -30,5 +32,7 @@ extern const uint16_t cursor_marker[];
 extern const uint16_t explosion1[];
 extern const uint16_t explosion2[];
 extern const uint16_t explosion3[];
+
+extern const uint16_t battleship_logo[];
 
 #endif /* __images_h */

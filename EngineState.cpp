@@ -29,10 +29,31 @@ enum Event Engine::pollQueue() {
 }
 
 void Engine::switchPlayer() {
-    ST7735_FillScreen(0x0903);
+    ST7735_FillScreen(MENU_TEXT);
     isPlayer1Turn = !isPlayer1Turn;
-    Clock_Delay1ms(5000);
-
+    if (engineState.language == ENGLISH) {
+        if (isPlayer1Turn) {
+            printText("PLAYER 1 TURN", 12, 12, MENU_BG, MENU_TEXT);
+        } else {
+            printText("PLAYER 2 TURN", 12, 12, MENU_BG, MENU_TEXT);
+        }
+    } else {
+        if (isPlayer1Turn) {
+            printText("TURNO DEL JUGADOR 1", 12, 12, MENU_BG, MENU_TEXT);
+        } else {
+            printText("TURNO DEL JUGADOR 2", 12, 12, MENU_BG, MENU_TEXT);
+        }
+    }
+    printText("5", 64, 73, MENU_BG, MENU_TEXT);
+    Clock_Delay1ms(1000);
+    printText("4", 64, 73, MENU_BG, MENU_TEXT);
+    Clock_Delay1ms(1000);
+    printText("3", 64, 73, MENU_BG, MENU_TEXT);
+    Clock_Delay1ms(1000);
+    printText("2", 64, 73, MENU_BG, MENU_TEXT);
+    Clock_Delay1ms(1000);
+    printText("1", 64, 73, MENU_BG, MENU_TEXT);
+    Clock_Delay1ms(1000);
 }
 
 // Player ====================================================

@@ -181,10 +181,7 @@ enum GameState handleBoardPlacement(enum Event event)
             break;
         }
     }
-<<<<<<< HEAD
-=======
     tempPlayer->drawMyBoard();
->>>>>>> 84b5d86cf91fd1fa221784f44e588d4c4a22b35e
     return BOARD_PLACEMENT;
 }
 

@@ -23,6 +23,7 @@
 #include "images/ImageTools.h"
 #include "images/images.h"
 #include "images/FontPrint.h"
+#include "sounds/sounds.h"
 #include "eventhandlers/JoystickSlidePotHandler.h"
 #include "eventhandlers/ButtonHandler.h"
 #include "gamestatehandlers/Menu.h"
@@ -129,7 +130,7 @@ int main1(void){ // main1
 }
 
 // use main2 to observe graphics
-int main(void){ // main2
+int main2(void){ // main2
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
@@ -315,27 +316,35 @@ int main4(void){ uint32_t last=0,now;
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
+  buttonHandlerInit();
+  //joystickSlidePotHandlerInit();
+  //TExaS_Init(ADC0,6,0);
   Sound_Init();  // initialize sound
-  TExaS_Init(ADC0,6,0); // ADC1 channel 6 is PB20, TExaS scope
   __enable_irq();
+
+  engineState.eventQueue.emptyContents();
   while(1){
-    if((last == 0)&&(now == 1)){
-      Sound_Shoot(); // call one of your sounds
+    enum Event event = engineState.pollQueue();
+    switch (event) {
+      case BUTTON0_PRESS:
+        Sound_Start(kersplash, KERSPLASH_LEN);
+        break;
+      case BUTTON1_PRESS:
+        Sound_Start(kaboom, KABOOM_LEN);
+        break;
+      case BUTTON2_PRESS:
+        Sound_Start(yippee, YIPPEE_LEN);
+        break;
+      case BUTTON3_PRESS:
+        Sound_Start(select, SELECT_LEN);
+        break;
+      default:
+        break;
     }
-    if((last == 0)&&(now == 2)){
-      Sound_Killed(); // call one of your sounds
-    }
-    if((last == 0)&&(now == 4)){
-      Sound_Explosion(); // call one of your sounds
-    }
-    if((last == 0)&&(now == 8)){
-      Sound_Fastinvader1(); // call one of your sounds
-    }
-    // modify this to test all your sounds
   }
 }
 // ALL ST7735 OUTPUT MUST OCCUR IN MAIN
-int main5(void){ // final main
+int main(void){ // final main
   __disable_irq();
   PLL_Init();
   LaunchPad_Init();
@@ -349,9 +358,9 @@ int main5(void){ // final main
   __enable_irq();
 
   engineState.eventQueue.emptyContents();
-  engineState.gamestate = ACTIVE_GAME;
-  engineState.player2.mine.board[0][0] = TWO_SHIP0;
-  initActiveGame();
+  engineState.gamestate = MENU;
+  //engineState.player2.mine.board[0][0] = TWO_SHIP0;
+  initMenu();
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event
     enum GameState next_state;
