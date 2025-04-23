@@ -33,33 +33,34 @@ bool isCollision(Player * player, Ship * ship)
 
 void updateBoard(Player * player)
 {
-    for(int y = 0; y < 10; y++)
-    {
-        for(int x = 0; x < 10; x++)
+    if (player->two_ship0.isVisible) {
+        uint8_t x = player->two_ship0.board_pos_x;
+        uint8_t y = player->two_ship0.board_pos_y;
+        player->mine.board[y][x] = TWO_SHIP0;
+        if(player->two_ship0.rotated)
         {
-            if(x == player->two_ship0.board_pos_x && y == player->two_ship0.board_pos_y)
-            {
-                player->mine.board[y][x] = TWO_SHIP0;
-                if(player->two_ship0.rotated)
-                {
-                    player->mine.board[y][x + 1] = TWO_SHIP0;
-                }
-                else {
-                    player->mine.board[y - 1][x] = TWO_SHIP0;
-                }
-            }
-            else if (x == player->two_ship1.board_pos_x && y == player->two_ship1.board_pos_y){
-                player->mine.board[y][x] = TWO_SHIP1;
-                if(player->two_ship1.rotated)
-                {
-                    player->mine.board[y][x + 1] = TWO_SHIP1;
-                }
-                else {
-                    player->mine.board[y - 1][x] = TWO_SHIP1;
-                }
-            }
-            else if (x == player->three_ship.board_pos_x && y == player->three_ship.board_pos_y){
-                player->mine.board[y][x] = THREE_SHIP;
+            player->mine.board[y][x + 1] = TWO_SHIP0;
+        }
+        else {
+            player->mine.board[y - 1][x] = TWO_SHIP0;
+        }
+    }
+    if (player->two_ship1.isVisible) {
+        uint8_t x = player->two_ship1.board_pos_x;
+        uint8_t y = player->two_ship1.board_pos_y;
+        player->mine.board[y][x] = TWO_SHIP1;
+        if(player->two_ship1.rotated)
+        {
+            player->mine.board[y][x + 1] = TWO_SHIP1;
+        }
+        else {
+            player->mine.board[y - 1][x] = TWO_SHIP1;
+        }
+    }
+    if (player->three_ship.isVisible) {
+        uint8_t x = player->three_ship.board_pos_x;
+        uint8_t y = player->three_ship.board_pos_y;
+        player->mine.board[y][x] = THREE_SHIP;
                 if(player->three_ship.rotated)
                 {
                     player->mine.board[y][x + 1] = THREE_SHIP;
@@ -69,9 +70,11 @@ void updateBoard(Player * player)
                     player->mine.board[y - 1][x] = THREE_SHIP;
                     player->mine.board[y - 2][x] = THREE_SHIP;
                 }
-            }
-            else if (x == player->four_ship.board_pos_x && y == player->four_ship.board_pos_y){
-                player->mine.board[y][x] = FOUR_SHIP;
+    }
+    if (player->four_ship.isVisible) {
+        uint8_t x = player->four_ship.board_pos_x;
+        uint8_t y = player->four_ship.board_pos_y;
+        player->mine.board[y][x] = FOUR_SHIP;
                 if(player->four_ship.rotated)
                 {
                     player->mine.board[y][x + 1] = FOUR_SHIP;
@@ -83,9 +86,11 @@ void updateBoard(Player * player)
                     player->mine.board[y - 2][x] = FOUR_SHIP;
                     player->mine.board[y - 3][x] = FOUR_SHIP;
                 }
-            }
-            else if (x == player->five_ship.board_pos_x && y == player->five_ship.board_pos_y){
-                player->mine.board[y][x] = FIVE_SHIP;
+    }
+    if (player->five_ship.isVisible) {
+        uint8_t x = player->five_ship.board_pos_x;
+        uint8_t y = player->five_ship.board_pos_y;
+        player->mine.board[y][x] = FIVE_SHIP;
                 if(player->five_ship.rotated)
                 {
                     player->mine.board[y][x + 1] = FIVE_SHIP;
@@ -99,13 +104,8 @@ void updateBoard(Player * player)
                     player->mine.board[y - 3][x] = FIVE_SHIP;
                     player->mine.board[y - 4][x] = FIVE_SHIP;
                 }
-            }
-            else {
-                player->mine.board[y][x] = WATER;
-            }
-        }
     }
-}
+    }
 
 void initBoardPlacement() {
     engineState.isPlayer1Turn = true;
@@ -206,6 +206,7 @@ enum GameState handleBoardPlacement(enum Event event)
             {
                 tempPlayer->numShipsPlaced++;
                 updateBoard(tempPlayer);
+                Sound_Start(select, SELECT_LEN);
             }
             break;
         case BUTTON1_PRESS:
