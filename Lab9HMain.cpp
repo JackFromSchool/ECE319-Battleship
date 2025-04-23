@@ -129,7 +129,7 @@ int main1(void){ // main1
 }
 
 // use main2 to observe graphics
-int main2(void){ // main2
+int main(void){ // main2
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
@@ -223,7 +223,10 @@ int main2(void){ // main2
   engineState.player1.drawMyBoard();
   */
 
-  printText("HI", 0, 7, 0xFFFF, 0x3333);
+  printText("0123456789", 0, 7, 0xFFFF, 0x0000);
+  printText("ABCDEFGHIJ", 0, 15, 0xFFFF, 0x0000);
+  printText("KLMNOPQRST", 0, 23, 0xFFFF, 0x0000);
+  printText("UVWXYZ", 0, 31, 0xFFFF, 0x0000);
 
   while(1){
   }
@@ -330,7 +333,7 @@ int main4(void){ uint32_t last=0,now;
   }
 }
 // ALL ST7735 OUTPUT MUST OCCUR IN MAIN
-int main(void){ // final main
+int main5(void){ // final main
   __disable_irq();
   PLL_Init();
   LaunchPad_Init();
@@ -345,6 +348,7 @@ int main(void){ // final main
 
   engineState.eventQueue.emptyContents();
   engineState.gamestate = ACTIVE_GAME;
+  engineState.player2.mine.board[0][0] = TWO_SHIP0;
   initActiveGame();
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event

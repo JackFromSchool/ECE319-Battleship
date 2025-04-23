@@ -148,6 +148,14 @@ void Player::drawEnemyBoard(bool cursor) {
     }
 }
 
+bool Player::hasLost() {
+    return this->two_ship0.sunk &&
+        this->two_ship1.sunk &&
+        this->three_ship.sunk &&
+        this->four_ship.sunk &&
+        this->five_ship.sunk;
+}
+
 // Cursor ====================================================
 
 Cursor::Cursor() {
@@ -175,6 +183,13 @@ void Ship::set_x(uint8_t new_x) {
 void Ship::set_y(uint8_t new_y) {
     this->board_pos_y = new_y;
     this->sprite.set_y(BOARDSPACEY(new_y));
+}
+
+void Ship::hit() {
+    this->num_hits++;
+    if (this->num_hits == this->ship_size) {
+        this->sunk = true;
+    }
 }
 
 // Board ====================================================

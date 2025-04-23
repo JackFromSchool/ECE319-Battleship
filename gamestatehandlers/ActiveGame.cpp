@@ -2,6 +2,8 @@
 #include "Events.h"
 #include "Globals.h"
 #include "../inc/Clock.h"
+#include "../inc/ST7735.h"
+#include "images/ImageTools.h"
 
 static bool isMyBoard;
 
@@ -95,22 +97,27 @@ void registerHit() {
         case TWO_SHIP0:
             *enemy_space = TWO_SHIP0_HIT;
             *my_space = HIT;
+            enemy->two_ship0.hit();
             break;
         case TWO_SHIP1:
             *enemy_space = TWO_SHIP1_HIT;
             *my_space = HIT;
+            enemy->two_ship1.hit();
             break;
         case THREE_SHIP:
             *enemy_space = THREE_SHIP_HIT;
             *my_space = HIT;
+            enemy->three_ship.hit();
             break;
         case FOUR_SHIP:
             *enemy_space = FOUR_SHIP_HIT;
             *my_space = HIT;
+            enemy->four_ship.hit();
             break;
         case FIVE_SHIP:
             *enemy_space = FIVE_SHIP_HIT;
             *my_space = HIT;
+            enemy->five_ship.hit();
             break;
         case WATER:
             *enemy_space = MISS;
@@ -128,11 +135,58 @@ void registerHit() {
     }
 
     if (hit) {
-        {
-            
+        Clock_Delay1ms(250);
+        {   
+            Sprite sp = Sprite(explosion1, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
+            uint16_t temp[sp.size()];
+            sp.fill_background(battleship_board, temp);
+            DRAWSPRITE(sp, temp);
         }
+        Clock_Delay1ms(250);
+        {   
+            Sprite sp = Sprite(explosion2, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
+            uint16_t temp[sp.size()];
+            sp.fill_background(battleship_board, temp);
+            DRAWSPRITE(sp, temp);
+        }
+        Clock_Delay1ms(250);
+        {   
+            Sprite sp = Sprite(explosion3, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
+            uint16_t temp[sp.size()];
+            sp.fill_background(battleship_board, temp);
+            DRAWSPRITE(sp, temp);
+        }
+        Clock_Delay1ms(250);
+        {   
+            Sprite sp = Sprite(explosion1, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
+            uint16_t temp[sp.size()];
+            sp.fill_background(battleship_board, temp);
+            DRAWSPRITE(sp, temp);
+        }
+        Clock_Delay1ms(250);
+        {   
+            Sprite sp = Sprite(explosion2, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
+            uint16_t temp[sp.size()];
+            sp.fill_background(battleship_board, temp);
+            DRAWSPRITE(sp, temp);
+        }
+        Clock_Delay1ms(250);
+        {   
+            Sprite sp = Sprite(explosion3, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
+            uint16_t temp[sp.size()];
+            sp.fill_background(battleship_board, temp);
+            DRAWSPRITE(sp, temp);
+        }
+        Clock_Delay1ms(250);
+        {   
+            Sprite sp = Sprite(explosion3, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
+            uint16_t temp[sp.size()];
+            sp.fill_background(battleship_board, temp);
+            DRAWSPRITE(sp, temp);
+        }
+        Clock_Delay1ms(250);
     } else {
-        Clock_Delay1ms(1000);
+        Clock_Delay1ms(2000);
     }
 }
 

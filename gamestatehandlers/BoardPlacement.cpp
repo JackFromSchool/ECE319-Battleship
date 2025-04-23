@@ -246,7 +246,7 @@ enum GameState handleBoardPlacement(enum Event event) {
         }
         engineState.player2.drawMyBoard();
     }
-    return BOARD_PLACEMENT
+    return BOARD_PLACEMENT;
 }
 
 //update the board's placement and continuously refresh the board
