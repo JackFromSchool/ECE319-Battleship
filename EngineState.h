@@ -80,6 +80,8 @@ class Player {
         Board mine;
         uint8_t numShipsPlaced;
         Cursor cursor;
+        uint8_t alive_ships;
+        uint8_t sunk_ships;
         Ship two_ship0;
         Ship two_ship1;
         Ship three_ship;

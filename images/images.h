@@ -7,6 +7,8 @@
 #define __images_h
 #include <stdint.h>
 
+#define BOARD_BG 0x38B7
+#define BOARD_TEXT 0x0061
 extern const uint16_t battleship_board[];
 
 extern const uint16_t two_space_battleship1[];

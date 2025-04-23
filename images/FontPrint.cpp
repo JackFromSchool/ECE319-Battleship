@@ -68,13 +68,13 @@ const uint16_t font[] = {
 
 };
 
-void printText(char* text, uint16_t x_pos, uint16_t y_pos, uint16_t bg_color, uint16_t text_color) {
+void printText(char* text, uint32_t x_pos, uint32_t y_pos, uint16_t bg_color, uint16_t text_color) {
     while (*text != 0) {
         if (*text == ' ') {
             x_pos += 2;
         } else {
                
-            uint16_t index;
+            uint32_t index;
             if (*text < '9') {
                 index = 9 - (*text - '0');
             } else {

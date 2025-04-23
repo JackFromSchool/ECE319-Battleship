@@ -216,17 +216,19 @@ int main(void){ // main2
   }
   */
 
-  /*
+  engineState.language = SPANISH;
   engineState.player1.mine.board[0][0] = HIT;
   engineState.player1.mine.board[1][0] = HIT;
   engineState.player1.mine.board[1][1] = MISS;
   engineState.player1.drawMyBoard();
-  */
+  
 
-  printText("0123456789", 0, 7, 0xFFFF, 0x0000);
-  printText("ABCDEFGHIJ", 0, 15, 0xFFFF, 0x0000);
-  printText("KLMNOPQRST", 0, 23, 0xFFFF, 0x0000);
+  /*
+  printText("YOUR SHIPS", 0, 7, 0xFFFF, 0x0000);
+  printText("SUNK SHIPS", 0, 15, 0xFFFF, 0x0000);
+  printText("ABILITY", 0, 23, 0xFFFF, 0x0000);
   printText("UVWXYZ", 0, 31, 0xFFFF, 0x0000);
+  */
 
   while(1){
   }

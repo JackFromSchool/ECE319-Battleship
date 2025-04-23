@@ -2,8 +2,10 @@
 #include "Events.h"
 #include "images/images.h"
 #include "images/ImageTools.h"
+#include "images/FontPrint.h"
 #include "../inc/ST7735.h"
 #include "../inc/Clock.h"
+#include "Globals.h"
 
 // Engine ====================================================
 
@@ -42,6 +44,8 @@ Player::Player() : two_ship0(Sprite(two_space_battleship1, BOARDSPACEX(5), BOARD
     five_ship(Sprite(five_space_battleship, BOARDSPACEX(5), BOARDSPACEY(5), 11, 55), 5) {
     
     this->numShipsPlaced = 0;
+    this->alive_ships = 5;
+    this->sunk_ships = 0;
     this->enemy = Board();
     this->mine = Board();
     this->cursor = Cursor();
@@ -108,12 +112,34 @@ void Player::drawMyBoard() {
         }
     }
 
+    if (engineState.language == ENGLISH) {
+        printText("YOUR SHIPS", 65, 141, BOARD_BG, BOARD_TEXT);
+        printText("SUNK SHIPS", 65, 152, BOARD_BG, BOARD_TEXT);
+
+        printText("ABILITY", 8, 141, BOARD_BG, BOARD_TEXT);
+    } else {
+        printText("TUS BARCOS", 65, 141, BOARD_BG, BOARD_TEXT);
+        printText("BARCOS HUNDIDOS", 40, 152, BOARD_BG, BOARD_TEXT);
+
+        printText("CAPACIDAD", 5, 141, BOARD_BG, BOARD_TEXT);
+    }
+
+    char your_ships[2];
+    your_ships[1] = '\0';
+    your_ships[0] = this->alive_ships + '0';
+
+    char sunk_ships[2];
+    sunk_ships[1] = '\0';
+    sunk_ships[0] = this->sunk_ships + '0';
+
+    printText(your_ships, 115, 141, BOARD_BG, BOARD_TEXT);
+    printText(sunk_ships, 115, 152, BOARD_BG, BOARD_TEXT);
 }
 
 void Player::drawEnemyBoard(bool cursor) {
         ST7735_DrawBitmap(0, 160, battleship_board, 128, 160);
 
-        for (uint32_t row = 0; row < 10; row++) {
+    for (uint32_t row = 0; row < 10; row++) {
         for (uint32_t column = 0; column < 10; column++) {
             switch (this->enemy.board[row][column]) {
                 case FIVE_SHIP_HIT: case FOUR_SHIP_HIT:
@@ -145,7 +171,32 @@ void Player::drawEnemyBoard(bool cursor) {
             sp.fill_background(battleship_board, temp);
             DRAWSPRITE(sp, temp);
         }
+
+
     }
+
+    if (engineState.language == ENGLISH) {
+        printText("YOUR SHIPS", 65, 141, BOARD_BG, BOARD_TEXT);
+        printText("SUNK SHIPS", 65, 152, BOARD_BG, BOARD_TEXT);
+
+        printText("ABILITY", 8, 141, BOARD_BG, BOARD_TEXT);
+    } else {
+        printText("TUS BARCOS", 65, 141, BOARD_BG, BOARD_TEXT);
+        printText("BARCOS HUNDIDOS", 40, 152, BOARD_BG, BOARD_TEXT);
+
+        printText("CAPACIDAD", 5, 141, BOARD_BG, BOARD_TEXT);
+    }
+
+    char your_ships[2];
+    your_ships[1] = '\0';
+    your_ships[0] = this->alive_ships + '0';
+
+    char sunk_ships[2];
+    sunk_ships[1] = '\0';
+    sunk_ships[0] = this->sunk_ships + '0';
+
+    printText(your_ships, 115, 141, BOARD_BG, BOARD_TEXT);
+    printText(sunk_ships, 115, 152, BOARD_BG, BOARD_TEXT);
 }
 
 bool Player::hasLost() {
