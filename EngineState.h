@@ -64,7 +64,7 @@ class Ship {
         Ship(Sprite sprite, uint8_t ship_size);
         void set_x(uint8_t new_x);
         void set_y(uint8_t new_y);
-        void hit();
+        bool hit();
 };
 
 class Cursor {

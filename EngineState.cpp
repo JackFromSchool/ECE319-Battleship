@@ -257,11 +257,13 @@ void Ship::set_y(uint8_t new_y) {
     this->sprite.set_y(BOARDSPACEY(new_y));
 }
 
-void Ship::hit() {
+bool Ship::hit() {
     this->num_hits++;
     if (this->num_hits == this->ship_size) {
         this->sunk = true;
+        return true;
     }
+    return false;
 }
 
 // Board ====================================================

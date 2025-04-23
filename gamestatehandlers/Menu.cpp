@@ -75,6 +75,11 @@ void printOptions() {
 
 void initMenu() {
     current_screen = MAIN_MENU;
+    engineState.audio = true;
+    engineState.language = ENGLISH;
+    engineState.player1 = Player();
+    engineState.player2 = Player();
+    engineState.playmode = SINGLE_BOARD;
     printMain();
 }
 

@@ -359,7 +359,28 @@ int main(void){ // final main
 
   engineState.eventQueue.emptyContents();
   engineState.gamestate = MENU;
-  //engineState.player2.mine.board[0][0] = TWO_SHIP0;
+  /*
+  engineState.player2.mine.board[0][0] = TWO_SHIP0;
+  engineState.player2.mine.board[0][1] = TWO_SHIP0;
+  
+  engineState.player2.mine.board[1][0] = TWO_SHIP1;
+  engineState.player2.mine.board[1][1] = TWO_SHIP1;
+
+  engineState.player2.mine.board[2][0] = THREE_SHIP;
+  engineState.player2.mine.board[2][1] = THREE_SHIP;
+  engineState.player2.mine.board[2][2] = THREE_SHIP;
+
+  engineState.player2.mine.board[3][0] = FOUR_SHIP;
+  engineState.player2.mine.board[3][1] = FOUR_SHIP;
+  engineState.player2.mine.board[3][2] = FOUR_SHIP;
+  engineState.player2.mine.board[3][3] = FOUR_SHIP;
+
+  engineState.player2.mine.board[4][0] = FIVE_SHIP;
+  engineState.player2.mine.board[4][1] = FIVE_SHIP;
+  engineState.player2.mine.board[4][2] = FIVE_SHIP;
+  engineState.player2.mine.board[4][3] = FIVE_SHIP;
+  engineState.player2.mine.board[4][4] = FIVE_SHIP;
+  */
   initMenu();
   while(1){
     enum Event event = engineState.pollQueue(); // Hold until we get an event

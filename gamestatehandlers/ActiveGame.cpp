@@ -1,4 +1,5 @@
 #include "ActiveGame.h"
+#include "EngineState.h"
 #include "Events.h"
 #include "Globals.h"
 #include "../inc/Clock.h"
@@ -79,7 +80,7 @@ static bool isValidMove() {
     return current_player->enemy.board[current_player->cursor.y_pos][current_player->cursor.x_pos] == WATER;
 }
 
-void registerHit() {
+bool registerHit() {
     Player *current_player;
     Player *enemy;
     if (engineState.isPlayer1Turn) {
@@ -91,33 +92,34 @@ void registerHit() {
     }
 
     bool hit = true;
+    bool sunk = false;
     enum BoardSpace *enemy_space = &enemy->mine.board[current_player->cursor.y_pos][current_player->cursor.x_pos];
     enum BoardSpace *my_space = &current_player->enemy.board[current_player->cursor.y_pos][current_player->cursor.x_pos];
     switch (*enemy_space) {
         case TWO_SHIP0:
             *enemy_space = TWO_SHIP0_HIT;
             *my_space = HIT;
-            enemy->two_ship0.hit();
+            sunk = enemy->two_ship0.hit();
             break;
         case TWO_SHIP1:
             *enemy_space = TWO_SHIP1_HIT;
             *my_space = HIT;
-            enemy->two_ship1.hit();
+            sunk = enemy->two_ship1.hit();
             break;
         case THREE_SHIP:
             *enemy_space = THREE_SHIP_HIT;
             *my_space = HIT;
-            enemy->three_ship.hit();
+            sunk = enemy->three_ship.hit();
             break;
         case FOUR_SHIP:
             *enemy_space = FOUR_SHIP_HIT;
             *my_space = HIT;
-            enemy->four_ship.hit();
+            sunk = enemy->four_ship.hit();
             break;
         case FIVE_SHIP:
             *enemy_space = FIVE_SHIP_HIT;
             *my_space = HIT;
-            enemy->five_ship.hit();
+            sunk = enemy->five_ship.hit();
             break;
         case WATER:
             *enemy_space = MISS;
@@ -128,6 +130,11 @@ void registerHit() {
             break;
     }
 
+    if (sunk) {
+        enemy->alive_ships--;
+        current_player->sunk_ships++;   
+    }
+
     if (engineState.isPlayer1Turn) {
         engineState.player1.drawEnemyBoard(false);
     } else {
@@ -135,6 +142,7 @@ void registerHit() {
     }
 
     if (hit) {
+        
         Clock_Delay1ms(250);
         {   
             Sprite sp = Sprite(explosion1, BOARDSPACEX(current_player->cursor.x_pos), BOARDSPACEY(current_player->cursor.y_pos), 11, 11);
@@ -188,6 +196,8 @@ void registerHit() {
     } else {
         Clock_Delay1ms(2000);
     }
+
+    return enemy->hasLost();
 }
 
 void initActiveGame() {
@@ -224,10 +234,12 @@ enum GameState handleActiveGame(enum Event event) {
         case BUTTON0_PRESS:
             if (isMyBoard) return ACTIVE_GAME;
             if (!isValidMove()) return ACTIVE_GAME;
-            registerHit();
+            if (registerHit()) {
+                return END_SCREEN;
+            }
             engineState.switchPlayer();
             return ACTIVE_GAME;
-        
+    
         default:
             return ACTIVE_GAME;
     }
